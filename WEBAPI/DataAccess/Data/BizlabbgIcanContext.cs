@@ -207,6 +207,22 @@ public partial class BizlabbgIcanContext : DbContext
 
     public virtual DbSet<IcaksPostmetum> IcaksPostmeta { get; set; }
 
+    public virtual DbSet<IcaksSappAction> IcaksSappActions { get; set; }
+
+    public virtual DbSet<IcaksSappActionHistory> IcaksSappActionHistories { get; set; }
+
+    public virtual DbSet<IcaksSappForeignOrderTable> IcaksSappForeignOrderTables { get; set; }
+
+    public virtual DbSet<IcaksSappOrder> IcaksSappOrders { get; set; }
+
+    public virtual DbSet<IcaksSappRole> IcaksSappRoles { get; set; }
+
+    public virtual DbSet<IcaksSappStatus> IcaksSappStatuses { get; set; }
+
+    public virtual DbSet<IcaksSappUser> IcaksSappUsers { get; set; }
+
+    public virtual DbSet<IcaksSappUsersRole> IcaksSappUsersRoles { get; set; }
+
     public virtual DbSet<IcaksTecEvent> IcaksTecEvents { get; set; }
 
     public virtual DbSet<IcaksTecOccurrence> IcaksTecOccurrences { get; set; }
@@ -3014,6 +3030,138 @@ public partial class BizlabbgIcanContext : DbContext
             entity.Property(e => e.MetaKey).HasColumnName("meta_key");
             entity.Property(e => e.MetaValue).HasColumnName("meta_value");
             entity.Property(e => e.PostId).HasColumnName("post_id");
+        });
+
+        modelBuilder.Entity<IcaksSappAction>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_actions");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Expense)
+                .HasPrecision(6)
+                .HasColumnName("expense");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<IcaksSappActionHistory>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_action_history");
+
+            entity.HasIndex(e => e.ActionId, "action_id");
+
+            entity.HasIndex(e => e.OrderId, "order_id");
+
+            entity.HasIndex(e => e.UserId, "user_id");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ActionId).HasColumnName("action_id");
+            entity.Property(e => e.Date)
+                .HasColumnType("datetime")
+                .HasColumnName("date");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+        });
+
+        modelBuilder.Entity<IcaksSappForeignOrderTable>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_foreign_order_table");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<IcaksSappOrder>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_orders");
+
+            entity.HasIndex(e => e.ForeignOrderId, "foreign_order_id");
+
+            entity.HasIndex(e => e.ForeignOrderTableId, "foreign_order_table_id");
+
+            entity.HasIndex(e => e.StatusId, "status_id");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ForeignOrderId).HasColumnName("foreign_order_id");
+            entity.Property(e => e.ForeignOrderTableId).HasColumnName("foreign_order_table_id");
+            entity.Property(e => e.IsPossibleDuplicate).HasColumnName("is_possible_duplicate");
+            entity.Property(e => e.StatusId).HasColumnName("status_id");
+        });
+
+        modelBuilder.Entity<IcaksSappRole>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_roles");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<IcaksSappStatus>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_statuses");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<IcaksSappUser>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_users");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Email)
+                .HasMaxLength(50)
+                .HasColumnName("email");
+            entity.Property(e => e.FirstName)
+                .HasMaxLength(50)
+                .HasColumnName("first_name");
+            entity.Property(e => e.LastName)
+                .HasMaxLength(50)
+                .HasColumnName("last_name");
+            entity.Property(e => e.PasswordHash)
+                .HasMaxLength(64)
+                .IsFixedLength()
+                .HasColumnName("password_hash");
+            entity.Property(e => e.RoleId).HasColumnName("role_id");
+            entity.Property(e => e.Wage)
+                .HasPrecision(6)
+                .HasColumnName("wage");
+        });
+
+        modelBuilder.Entity<IcaksSappUsersRole>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_users_roles");
+
+            entity.HasIndex(e => e.RoleId, "role_id");
+
+            entity.HasIndex(e => e.UserId, "user_id");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.RoleId).HasColumnName("role_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
         });
 
         modelBuilder.Entity<IcaksTecEvent>(entity =>
