@@ -45,7 +45,6 @@ CREATE TABLE `icaks_sapp_users` (
   `last_name` nvarchar(50) not null,
   `email` nvarchar(50) not null,
   `password_hash` char(64) not null,
-  `role_id` int not null,
   `wage` decimal(6,2) null,
   PRIMARY KEY (`id`)
 )ENGINE = MyISAM;

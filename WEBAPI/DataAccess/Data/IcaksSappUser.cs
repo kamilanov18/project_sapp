@@ -15,7 +15,5 @@ public partial class IcaksSappUser
 
     public string PasswordHash { get; set; } = null!;
 
-    public int RoleId { get; set; }
-
     public decimal? Wage { get; set; }
 }

@@ -4,7 +4,7 @@ namespace Services.Auth
 {
     public interface IAuthService
     {
-        public string GenerateJWTToken();
-        public LoginResponseStatus Login(LoginDTO dto);
+        public string GenerateJWTToken(int userId);
+        public LoginResponseStatus Login(LoginDTO dto, out int? userId);
     }
 }

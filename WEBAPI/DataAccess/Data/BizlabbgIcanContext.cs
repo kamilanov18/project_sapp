@@ -3143,7 +3143,6 @@ public partial class BizlabbgIcanContext : DbContext
                 .HasMaxLength(64)
                 .IsFixedLength()
                 .HasColumnName("password_hash");
-            entity.Property(e => e.RoleId).HasColumnName("role_id");
             entity.Property(e => e.Wage)
                 .HasPrecision(6)
                 .HasColumnName("wage");

@@ -21,10 +21,11 @@ namespace WEBAPI.Controllers
         [HttpPost]
         public IActionResult Login(LoginDTO dto)
         {
-            var res = _authService.Login(dto);
+            int? userId;
+            var res = _authService.Login(dto,out userId);
             if(res==LoginResponseStatus.Success)
             {
-                return Ok(_authService.GenerateJWTToken());
+                return Ok(_authService.GenerateJWTToken(userId??0));
             }
             else if (res == LoginResponseStatus.NoEmailFound)
             {
