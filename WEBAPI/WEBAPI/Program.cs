@@ -1,8 +1,9 @@
 using DataAccess.Data;
-using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLog;
+using NLog.Web;
 using System.Text;
 
 namespace WEBAPI
@@ -11,26 +12,34 @@ namespace WEBAPI
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(opt =>
+            var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+            logger.Info("init main");
+            try
             {
-                opt.AddSecurityDefinition("Bearer", new()
+                var builder = WebApplication.CreateBuilder(args);
+
+                // Add services to the container.
+
+                builder.Services.AddControllers();
+
+                builder.Logging.ClearProviders();
+                builder.Host.UseNLog();
+
+                // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+                builder.Services.AddEndpointsApiExplorer();
+                builder.Services.AddSwaggerGen(opt =>
                 {
-                    In = ParameterLocation.Header,
-                    Description = "Please enter a valid token",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    Scheme = "Bearer"
-                });
-                opt.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+                    opt.AddSecurityDefinition("Bearer", new()
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "Please enter a valid token",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.Http,
+                        BearerFormat = "JWT",
+                        Scheme = "Bearer"
+                    });
+                    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
                     {
                         new OpenApiSecurityScheme
                         {
@@ -42,58 +51,67 @@ namespace WEBAPI
                         },
                         new string[]{}
                     }
+                    });
+
+                });
+                builder.Services.AddDbContext<BizlabbgIcanContext>();
+
+                // Register services from service layer
+                builder.Services.AddServiceLayerInternalServices();
+                builder.Services.AddServiceLayerAuthServices(builder.Configuration);
+                builder.Services.AddServiceLayerShippingServices();
+
+                string jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
+                string jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
+
+                builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtIssuer,
+                        ValidAudience = jwtIssuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                    };
                 });
 
-            });
-            builder.Services.AddDbContext<BizlabbgIcanContext>();
+                builder.Services.AddAuthorization();
 
-            // Register services from service layer
-            builder.Services.AddServiceLayerInternalServices();
-            builder.Services.AddServiceLayerAuthServices(builder.Configuration);
-            builder.Services.AddServiceLayerShippingServices();
+                //foreach (var service in builder.Services)
+                //{
+                //    Console.WriteLine(service.ImplementationType);
+                //}
 
-            string jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
-            string jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
+                var app = builder.Build();
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-            {
-                opt.TokenValidationParameters = new()
+                // Configure the HTTP request pipeline.
+                if (app.Environment.IsDevelopment())
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtIssuer,
-                    ValidAudience = jwtIssuer,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-                };
-            });
+                    app.UseSwagger();
+                    app.UseSwaggerUI();
+                }
 
-            builder.Services.AddAuthorization();
+                app.UseHttpsRedirection();
 
-            foreach (var service in builder.Services)
+                //app.UseAuthentication();
+                app.UseAuthorization();
+
+
+                app.MapControllers();
+
+                app.Run();
+            } 
+            catch (Exception ex)
             {
-                Console.WriteLine(service.ImplementationType);
+                logger.Error(ex);
             }
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            finally
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                LogManager.Shutdown();
             }
-
-            app.UseHttpsRedirection();
-
-            //app.UseAuthentication();
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
-            app.Run();
         }
     }
 }

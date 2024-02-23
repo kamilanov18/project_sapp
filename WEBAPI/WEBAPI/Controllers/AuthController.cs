@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs.Auth;
 using Services.Auth;
+using System.Security.Claims;
 
 namespace WEBAPI.Controllers
 {
