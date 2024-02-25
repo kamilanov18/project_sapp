@@ -23,7 +23,7 @@ namespace WEBAPI
         }
         public static IServiceCollection AddServiceLayerInternalServices(this IServiceCollection services)
         {
-            Assembly serviceAssembly = Assembly.GetAssembly(typeof(OrderStatusService));
+            Assembly serviceAssembly = Assembly.GetAssembly(typeof(StatusService));
             var interfaces = GetInterfaces(serviceAssembly);
             foreach( var type in serviceAssembly.ExportedTypes)
             {

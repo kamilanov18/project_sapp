@@ -13,7 +13,9 @@ public partial class IcaksSappUser
 
     public string Email { get; set; } = null!;
 
-    public string PasswordHash { get; set; } = null!;
-
     public decimal? Wage { get; set; }
+
+    public string Phone { get; set; } = null!;
+
+    public string? PasswordHash { get; set; }
 }
