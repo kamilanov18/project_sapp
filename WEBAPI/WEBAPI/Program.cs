@@ -14,6 +14,7 @@ namespace WEBAPI
         {
             var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
             logger.Info("init main");
+
             try
             {
                 var builder = WebApplication.CreateBuilder(args);
@@ -80,11 +81,6 @@ namespace WEBAPI
 
                 builder.Services.AddAuthorization();
 
-                //foreach (var service in builder.Services)
-                //{
-                //    Console.WriteLine(service.ImplementationType);
-                //}
-
                 var app = builder.Build();
 
                 // Configure the HTTP request pipeline.
@@ -107,6 +103,7 @@ namespace WEBAPI
             catch (Exception ex)
             {
                 logger.Error(ex);
+                throw;
             }
             finally
             {

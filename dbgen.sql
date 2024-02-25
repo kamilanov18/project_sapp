@@ -1,3 +1,5 @@
+use bizlabbg_ican;
+
 create table icaks_sapp_action_history
 (
     id        int auto_increment
