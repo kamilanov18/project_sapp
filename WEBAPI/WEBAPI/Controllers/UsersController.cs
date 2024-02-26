@@ -10,9 +10,9 @@ namespace WEBAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        ILogger<StatusesController> _logger;
+        ILogger<UsersController> _logger;
         IUserService _service;
-        public UsersController(ILogger<StatusesController> logger, IUserService service)
+        public UsersController(ILogger<UsersController> logger, IUserService service)
         {
             _service = service;
             _logger = logger;

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs.Internal;
 using Models.DTOs.Internal.Actions;
+using Mysqlx.Crud;
 using Services.Internal;
 using System.Data;
 
@@ -12,9 +13,9 @@ namespace WEBAPI.Controllers
     [ApiController]
     public class ActionsController : ControllerBase
     {
-        ILogger<StatusesController> _logger;
+        ILogger<ActionsController> _logger;
         IActionService _service;
-        public ActionsController(ILogger<StatusesController> logger, IActionService service)
+        public ActionsController(ILogger<ActionsController> logger, IActionService service)
         {
             _service = service;
             _logger = logger;
@@ -67,6 +68,34 @@ namespace WEBAPI.Controllers
             catch (Exception)
             {
                 return NoContent();
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles ="admin, caller")]
+        public IActionResult MakeCall([FromQuery]int orderId)
+        {
+            return RegisterAction(orderId, "call");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin, packager")]
+        public IActionResult Package([FromQuery] int orderId)
+        {
+            return RegisterAction(orderId, "package");
+        }
+
+        private IActionResult RegisterAction(int orderId, string actionName)
+        {
+            try
+            {
+                _service.RegisterAction(orderId,User.GetId(),_service.Get(actionName).Id);
+                _logger.LogInformation($"User with id {User.GetId()} made a call action on order: {orderId}");
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound("Invalid order or call action id");
             }
         }
     }

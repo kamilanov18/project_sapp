@@ -13,9 +13,11 @@ namespace WEBAPI.Controllers
     public class AuthController : ControllerBase
     {
         IAuthService _authService;
-        public AuthController(IAuthService authService)
+        ILogger<AuthController> _logger;
+        public AuthController(IAuthService authService, ILogger<AuthController> logger)
         {
             _authService = authService;
+            _logger = logger;
         }
 
         [AllowAnonymous]
@@ -26,17 +28,20 @@ namespace WEBAPI.Controllers
             var res = _authService.Login(dto,out userId);
             if(res==LoginResponseStatus.Success)
             {
+                _logger.LogInformation("User logged in: " + userId);
                 return Ok(_authService.GenerateJWTToken(userId??0));
             }
             else if (res == LoginResponseStatus.NoEmailFound)
             {
+                _logger.LogInformation("User tried to login with false email");
                 return Unauthorized("No such email found");
             }
             else if (res == LoginResponseStatus.InvalidPassword)
             {
+                _logger.LogInformation("User entered wrong password: " + User.GetId());
                 return Unauthorized("Incorrect password");
             }
-            return Unauthorized();
+            else return BadRequest();
         }
     }
 }

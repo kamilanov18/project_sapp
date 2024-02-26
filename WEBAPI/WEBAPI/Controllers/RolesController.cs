@@ -12,9 +12,9 @@ namespace WEBAPI.Controllers
     [ApiController]
     public class RolesController : ControllerBase
     {
-        ILogger<StatusesController> _logger;
+        ILogger<RolesController> _logger;
         IRoleService _service;
-        public RolesController(ILogger<StatusesController> logger, IRoleService service)
+        public RolesController(ILogger<RolesController> logger, IRoleService service)
         {
             _service = service;
             _logger = logger;

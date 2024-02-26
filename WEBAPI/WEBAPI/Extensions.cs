@@ -43,8 +43,7 @@ namespace WEBAPI
             services.AddScoped<IAuthService, AuthService>(x =>new AuthService(
                 x.GetService<BizlabbgIcanContext>(),
                 config.GetSection("Jwt:Issuer").Get<string>(),
-                config.GetSection("Jwt:Key").Get<string>(),
-                x.GetService<ILogger<AuthService>>())
+                config.GetSection("Jwt:Key").Get<string>())
             );
             return services;
         }

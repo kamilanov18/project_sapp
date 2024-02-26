@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Services.Shipping
 {
@@ -9,17 +10,11 @@ namespace Services.Shipping
         {
             _services = services;
         }
-        public IShippingService Resolve(string key)
+        public IShippingService Resolve(string key) => key switch
         {
-            switch (key)
-            {
-                case "econt":
-                    return _services.BuildServiceProvider().GetService<EcontShippingService>();
-                case "speedy":
-                    return _services.BuildServiceProvider().GetService<SpeedyShippingService>();
-                default:
-                    throw new KeyNotFoundException();
-            }
-        }
+            "econt" => _services.BuildServiceProvider().GetService<EcontShippingService>(),
+            "speedy" => _services.BuildServiceProvider().GetService<SpeedyShippingService>(),
+            _ => throw new KeyNotFoundException()
+        };
     }
 }

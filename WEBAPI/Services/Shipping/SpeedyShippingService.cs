@@ -9,12 +9,12 @@ namespace Services.Shipping
             throw new NotImplementedException();
         }
 
-        public List<OrderTrackingDTO> GetTrackingDetails(int orderId)
+        public void SendShipment(ShippingDetails shippingDetails)
         {
             throw new NotImplementedException();
         }
 
-        public void SendShipment(ShippingDetails shippingDetails)
+        public Task<HttpResponseMessage> SendShipmentAsync(ShippingDetails shippingDetails)
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,4 @@
 ﻿using DataAccess.Data;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Models.DTOs.Auth;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,13 +11,11 @@ namespace Services.Auth
     {
         private string _jwtIssuer, _jwtKey;
         private BizlabbgIcanContext _ctx;
-        ILogger<AuthService> _logger;
-        public AuthService(BizlabbgIcanContext ctx, string jwtIssuer, string jwtKey,ILogger<AuthService> logger)
+        public AuthService(BizlabbgIcanContext ctx, string jwtIssuer, string jwtKey)
         {
             _jwtIssuer = jwtIssuer;
             _jwtKey = jwtKey;
             _ctx = ctx;
-            _logger = logger;
         }
         public string GenerateJWTToken(int userId)
         {
@@ -38,7 +35,6 @@ namespace Services.Auth
               signingCredentials: credentials);
 
             string token = new JwtSecurityTokenHandler().WriteToken(Sectoken);
-            _logger.LogInformation("Generated token for user: "+userId);
             return token;
         }
 
@@ -48,15 +44,12 @@ namespace Services.Auth
             userId = user is null ? null : user.Id;
             if (user is null || user == default)
             {
-                _logger.LogInformation("User tried to login with false email");
                 return LoginResponseStatus.NoEmailFound;
             }
             if (user.PasswordHash != dto.PasswordHash)
             {
-                _logger.LogInformation("User entered wrong password: "+userId);
                 return LoginResponseStatus.InvalidPassword;
             }
-            _logger.LogInformation("User logged in: "+userId);
             return LoginResponseStatus.Success;
         }
     }
