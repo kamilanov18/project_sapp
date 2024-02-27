@@ -1,5 +1,6 @@
 ﻿using DataAccess.Data;
 using Services.Auth;
+using Services.Helping;
 using Services.Internal;
 using Services.Shipping;
 using System.Reflection;
@@ -54,6 +55,12 @@ namespace WEBAPI
             services.AddScoped<IShippingService, SpeedyShippingService>();
             services.AddSingleton<ShippingServiceResolver>(opt=>new ShippingServiceResolver(services));
 
+            return services;
+        }
+
+        public static IServiceCollection AddHelperServices(this IServiceCollection services)
+        {
+            services.AddSingleton<IDBSeedingService, DBSeedingService>();
             return services;
         }
 

@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
+using Services.Helping;
 using System.Text;
 
 namespace WEBAPI
@@ -61,6 +62,7 @@ namespace WEBAPI
                 builder.Services.AddServiceLayerInternalServices();
                 builder.Services.AddServiceLayerAuthServices(builder.Configuration);
                 builder.Services.AddServiceLayerShippingServices();
+                builder.Services.AddHelperServices();
 
                 string jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
                 string jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
@@ -81,6 +83,11 @@ namespace WEBAPI
 
                 builder.Services.AddAuthorization();
 
+                //foreach (var service in builder.Services)
+                //{
+                //    Console.WriteLine(service);
+                //}
+
                 var app = builder.Build();
 
                 // Configure the HTTP request pipeline.
@@ -99,6 +106,8 @@ namespace WEBAPI
                 app.MapControllers();
 
                 app.Run();
+
+                ((DBSeedingService)app.Services.GetService(typeof(IDBSeedingService))).SeedDatabase();
             } 
             catch (Exception ex)
             {

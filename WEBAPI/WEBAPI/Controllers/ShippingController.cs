@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models.DTOs.Internal;
 using Models.DTOs.Shipping.Econt;
-using Services.Internal;
 using Services.Shipping;
 
 namespace WEBAPI.Controllers
@@ -23,17 +20,38 @@ namespace WEBAPI.Controllers
 
         [Authorize(Roles = "admin, caller")]
         [HttpPost]
-        public IActionResult ShipToEcont(EcontShipmentDTO dto)
+        public async Task<IActionResult> ShipToEcont(EcontShipmentDTO dto)
         {
             try
             {
-                _econtService.SendShipmentAsync(dto);
-                _logger.LogInformation($"User with id: {User.GetId()} sent econt shipment: {dto.Label.ReceiverClient.Name}");
+                var res = await _econtService.SendShipmentAsync(dto);
+                res.Content.ReadAsStream().CopyTo(Console.OpenStandardOutput());
+                _logger.LogInformation($"User with id: {User.GetId()} sent econt shipment to: {dto.Label.ReceiverClient.Name}");
                 return Ok();
             } 
             catch (Exception ex)
             {
                 _logger.LogInformation($"User with id: {User.GetId()} tried sending econt shipment to: {dto.Label.ReceiverClient.Name}, but failed");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = "admin, caller")]
+        [HttpPost]
+        public async Task<IActionResult> EcontValidateAddress(AddressDTO dto)
+        {
+            try
+            {
+                var res = await _econtService.ValidateAddress(dto);
+                res.Content.ReadAsStream().CopyTo(Console.OpenStandardOutput());
+                _logger.LogInformation($"User with id: {User.GetId()} validated address: {dto.City} {dto.Street} {dto.Num} {dto.Other} for econt");
+                if(res.IsSuccessStatusCode)
+                    return Ok();
+                return StatusCode((int)res.StatusCode);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"User with id: {User.GetId()} tried valdiating address: {dto.City} {dto.Street} {dto.Num} {dto.Other}, but failed");
                 return BadRequest(ex.Message);
             }
         }
