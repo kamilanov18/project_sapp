@@ -3,5 +3,6 @@
     public interface IDBSeedingService
     {
         void SeedDatabase();
+        public void ConvertForeignTableOrdersToNativeTableOrders();
     }
 }

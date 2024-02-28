@@ -83,12 +83,12 @@ namespace WEBAPI
 
                 builder.Services.AddAuthorization();
 
-                //foreach (var service in builder.Services)
-                //{
-                //    Console.WriteLine(service);
-                //}
-
                 var app = builder.Build();
+
+                using (var scope = app.Services.CreateScope())
+                {
+                    scope.ServiceProvider.GetService<IDBSeedingService>().SeedDatabase();
+                }
 
                 // Configure the HTTP request pipeline.
                 if (app.Environment.IsDevelopment())
@@ -106,8 +106,6 @@ namespace WEBAPI
                 app.MapControllers();
 
                 app.Run();
-
-                ((DBSeedingService)app.Services.GetService(typeof(IDBSeedingService))).SeedDatabase();
             } 
             catch (Exception ex)
             {

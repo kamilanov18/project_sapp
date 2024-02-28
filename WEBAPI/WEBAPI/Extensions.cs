@@ -60,7 +60,9 @@ namespace WEBAPI
 
         public static IServiceCollection AddHelperServices(this IServiceCollection services)
         {
-            services.AddSingleton<IDBSeedingService, DBSeedingService>();
+            services.AddScoped<IDBSeedingService, DBSeedingService>(x=> 
+                new DBSeedingService(x.GetService<BizlabbgIcanContext>())
+            );
             return services;
         }
 

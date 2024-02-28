@@ -124,6 +124,7 @@ desc bizlabbg_ican.icaks_wc_product_meta_lookup;
 
 select
     o.id,
+    o.status,
     a.first_name,
     a.last_name,
     a.email,
@@ -142,4 +143,19 @@ join icaks_wc_order_product_lookup lp on lp.order_id = o.id
 join icaks_wc_product_meta_lookup mp on mp.product_id = lp.product_id
 join icaks_wc_customer_lookup lc on lc.customer_id = lp.customer_id
 where a.address_type = 'shipping'
-AND o.id=1311
+AND status not like 'wc-processing';
+# AND o.id=1311
+
+select distinct status
+from icaks_wc_orders;
+
+select * from icaks_sapp_statuses;
+
+truncate table icaks_sapp_users;
+truncate table icaks_sapp_action_history;
+truncate table icaks_sapp_users_roles;
+truncate table icaks_sapp_roles;
+truncate table icaks_sapp_orders;
+truncate table icaks_sapp_actions;
+truncate table icaks_sapp_statuses;
+truncate table icaks_sapp_foreign_order_table;
