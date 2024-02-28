@@ -1,4 +1,6 @@
 ﻿using DataAccess.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace Services.Helping
 {
@@ -12,7 +14,8 @@ namespace Services.Helping
 
         public void ConvertForeignTableOrdersToNativeTableOrders()
         {
-            foreach (var order in _ctx.IcaksWcOrders)
+            List<IcaksSappOrder> orders = new();
+            foreach (var order in _ctx.IcaksWcOrders.AsNoTracking())
             {
                 var newOrder = new IcaksSappOrder()
                 {
@@ -29,9 +32,25 @@ namespace Services.Helping
                     case "auto-draft": newOrder.StatusId = 1; break;
                 }
 
-                _ctx.IcaksSappOrders.Add(newOrder);
+                orders.Add(newOrder);
             }
+
+            orders.ForEach(x => x.IsPossibleDuplicate = IsOrderDuplicate(x));
+
+            _ctx.IcaksSappOrders.AddRange(orders);
             _ctx.SaveChanges();
+        }
+
+        private bool IsOrderDuplicate(IcaksSappOrder order)
+        {
+            var res = (
+                           from a in _ctx.IcaksWcOrderAddresses
+                           join lp in _ctx.IcaksWcOrderProductLookups on a.Id equals lp.OrderId
+                           join mp in _ctx.IcaksWcProductMetaLookups on lp.ProductId equals (ulong)mp.ProductId
+                           where a.OrderId == order.ForeignOrderId
+                           select new { a.Id }
+                           ).AsNoTracking().ToList();
+            return res.Count!=1;
         }
         public void SeedDatabase()
         {

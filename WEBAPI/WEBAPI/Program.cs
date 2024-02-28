@@ -87,7 +87,9 @@ namespace WEBAPI
 
                 using (var scope = app.Services.CreateScope())
                 {
-                    scope.ServiceProvider.GetService<IDBSeedingService>().SeedDatabase();
+                    var service = scope.ServiceProvider.GetService<IDBSeedingService>();
+                    service.SeedDatabase();
+                    service.ConvertForeignTableOrdersToNativeTableOrders();
                 }
 
                 // Configure the HTTP request pipeline.

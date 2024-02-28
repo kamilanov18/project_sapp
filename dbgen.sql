@@ -122,7 +122,7 @@ desc icaks_wc_order_product_lookup;
 desc icaks_wc_customer_lookup;
 desc bizlabbg_ican.icaks_wc_product_meta_lookup;
 
-select
+select distinct
     o.id,
     o.status,
     a.first_name,
@@ -143,8 +143,9 @@ join icaks_wc_order_product_lookup lp on lp.order_id = o.id
 join icaks_wc_product_meta_lookup mp on mp.product_id = lp.product_id
 join icaks_wc_customer_lookup lc on lc.customer_id = lp.customer_id
 where a.address_type = 'shipping'
-AND status not like 'wc-processing';
-# AND o.id=1311
+# AND o.id=874
+
+select * from icaks_wc_product_meta_lookup
 
 select distinct status
 from icaks_wc_orders;
