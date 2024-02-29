@@ -51,7 +51,7 @@ namespace WEBAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"User with id: {User.GetId()} tried valdiating address: {dto.City} {dto.Street} {dto.Num} {dto.Other}, but failed");
+                _logger.LogInformation($"User with id: {User.GetId()} tried valdiating address: {dto.City} {dto.Street} {dto.Num} {dto.Other}, but failed: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }

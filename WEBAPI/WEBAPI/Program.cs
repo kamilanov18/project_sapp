@@ -14,6 +14,7 @@ namespace WEBAPI
         public static void Main(string[] args)
         {
             var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+            Console.OutputEncoding = Encoding.UTF8;
             logger.Info("init main");
 
             try

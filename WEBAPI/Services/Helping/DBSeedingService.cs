@@ -14,6 +14,8 @@ namespace Services.Helping
 
         public void ConvertForeignTableOrdersToNativeTableOrders()
         {
+            if (_ctx.IcaksSappOrders.Count() > 0)
+                return;
             List<IcaksSappOrder> orders = new();
             foreach (var order in _ctx.IcaksWcOrders.AsNoTracking())
             {
@@ -43,14 +45,37 @@ namespace Services.Helping
 
         private bool IsOrderDuplicate(IcaksSappOrder order)
         {
-            var res = (
+            var orderToCmp = (
                            from a in _ctx.IcaksWcOrderAddresses
-                           join lp in _ctx.IcaksWcOrderProductLookups on a.Id equals lp.OrderId
+                           join lp in _ctx.IcaksWcOrderProductLookups on a.OrderId equals lp.OrderId
                            join mp in _ctx.IcaksWcProductMetaLookups on lp.ProductId equals (ulong)mp.ProductId
-                           where a.OrderId == order.ForeignOrderId
-                           select new { a.Id }
-                           ).AsNoTracking().ToList();
-            return res.Count!=1;
+                           where a.OrderId == order.ForeignOrderId && a.AddressType == "shipping"
+                           select new { a.Address1,a.Address2,a.Country,a.FirstName,a.LastName,a.Email,a.City,a.State,a.Postcode,a.Phone,mp.Sku,lp.ProductQty }
+                           ).AsNoTracking().FirstOrDefault();
+            if (orderToCmp == default)
+            {
+                order.StatusId = 6;
+                return false;
+            }
+            var duplicateRows = (
+                           from a in _ctx.IcaksWcOrderAddresses
+                           join lp in _ctx.IcaksWcOrderProductLookups on a.OrderId equals lp.OrderId
+                           join mp in _ctx.IcaksWcProductMetaLookups on lp.ProductId equals (ulong)mp.ProductId
+                           where a.Address1 == orderToCmp.Address1 &&
+                           a.Address2 == orderToCmp.Address2 &&
+                           a.Country == orderToCmp.Country &&
+                           a.FirstName == orderToCmp.FirstName &&
+                           a.LastName == orderToCmp.LastName &&
+                           a.Email == orderToCmp.Email &&
+                           a.City == orderToCmp.City &&
+                           a.State == orderToCmp.State &&
+                           a.Postcode == orderToCmp.Postcode &&
+                           a.Phone == orderToCmp.Phone &&
+                           mp.Sku == orderToCmp.Sku &&
+                           lp.ProductQty == orderToCmp.ProductQty && 
+                           a.AddressType == "shipping"
+                           select new {a.Address1}).AsNoTracking().ToList();
+            return duplicateRows.Count>1;
         }
         public void SeedDatabase()
         {

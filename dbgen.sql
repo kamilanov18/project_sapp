@@ -143,7 +143,11 @@ join icaks_wc_order_product_lookup lp on lp.order_id = o.id
 join icaks_wc_product_meta_lookup mp on mp.product_id = lp.product_id
 join icaks_wc_customer_lookup lc on lc.customer_id = lp.customer_id
 where a.address_type = 'shipping'
-# AND o.id=874
+and o.id=1409
+# AND o.id=3642
+
+select * from icaks_wc_orders
+# where id=863
 
 select * from icaks_wc_product_meta_lookup
 
@@ -151,6 +155,9 @@ select distinct status
 from icaks_wc_orders;
 
 select * from icaks_sapp_statuses;
+
+select * from icaks_sapp_orders
+    where is_possible_duplicate = 1
 
 truncate table icaks_sapp_users;
 truncate table icaks_sapp_action_history;
@@ -160,3 +167,56 @@ truncate table icaks_sapp_orders;
 truncate table icaks_sapp_actions;
 truncate table icaks_sapp_statuses;
 truncate table icaks_sapp_foreign_order_table;
+
+create trigger if not exists is_entry_duplicate
+after insert
+on icaks_wc_order_addresses
+for each row
+BEGIN
+    insert into icaks_sapp_orders (status_id, foreign_order_table_id, foreign_order_id, is_possible_duplicate) VALUE
+    (1,1,NEW.order_id, (
+        (select count(*)
+        from
+            (
+            select distinct
+                a.first_name,
+                a.last_name,
+                a.email,
+                a.address_1,
+                a.address_2,
+                a.city,
+                a.state,
+                a.postcode,
+                a.country,
+                a.phone,
+                mp.sku as product_name,
+                lp.product_qty
+                from icaks_wc_orders o
+                join icaks_wc_order_addresses a on a.order_id=NEW.order_id
+                join icaks_wc_order_product_lookup lp on lp.order_id = o.id
+                join icaks_wc_product_meta_lookup mp on mp.product_id = lp.product_id
+                join icaks_wc_customer_lookup lc on lc.customer_id = lp.customer_id
+                where a.address_type = 'shipping'
+            INTERSECT
+            select
+                a.first_name,
+                a.last_name,
+                a.email,
+                a.address_1,
+                a.address_2,
+                a.city,
+                a.state,
+                a.postcode,
+                a.country,
+                a.phone,
+                mp.sku as product_name,
+                lp.product_qty
+                from icaks_wc_orders o
+                join icaks_wc_order_addresses a on a.order_id=o.id
+                join icaks_wc_order_product_lookup lp on lp.order_id = o.id
+                join icaks_wc_product_meta_lookup mp on mp.product_id = lp.product_id
+                join icaks_wc_customer_lookup lc on lc.customer_id = lp.customer_id
+                where a.address_type = 'shipping'
+            ) as result)>1)
+    );
+END;
