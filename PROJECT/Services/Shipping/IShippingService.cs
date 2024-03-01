@@ -7,7 +7,11 @@ namespace Services.Shipping
     {
         public string GenerateWaybill(int orderId);
         public Task<HttpResponseMessage> SendShipmentAsync(ShippingDetails shippingDetails);
-        public Task<HttpResponseMessage> ValidateAddress(AddressDTO addressDTO);
+        public Task<HttpResponseMessage> ValidateAddress(ShippingAddressDTO addressDTO);
+        public Task<List<CountryDTO>> EcontGetCountries();
+        public Task<List<CityDTO>> EcontGetCities(string countryCode);
+        public Task<List<StreetDTO>> EcontGetStreets(string cityId);
+        public Task<List<QuarterDTO>> EcontGetQuarters(int cityId);
         //public List<OrderTrackingDTO> GetTrackingDetails(int orderId);
 
     }

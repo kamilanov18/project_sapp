@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="ActionHistoryDTO.ts">
+      <CustomToolNamespace>DTOs\Internal\Actions\ActionHistoryDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="ActionReportDTO.ts">
+      <CustomToolNamespace>DTOs\Internal\Actions\ActionReportDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="ChangePasswordDTO.ts">
+      <CustomToolNamespace>DTOs\Users\ChangePasswordDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientDTO.ts">
+      <CustomToolNamespace>DTOs\Shipping\Econt\ClientDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="EditUserDTO.ts">
+      <CustomToolNamespace>DTOs\Users\EditUserDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="GetCountriesResponseDTO.ts">
+      <CustomToolNamespace>DTOs\Shipping\Econt\GetCountriesResponseDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="LocationDTO.ts">
+      <CustomToolNamespace>DTOs\Shipping\Econt\LocationDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="NomenclatureDTO.ts">
+      <CustomToolNamespace>DTOs\Internal\NomenclatureDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="QuarterDTO.ts">
+      <CustomToolNamespace>DTOs\Shipping\Econt\QuarterDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="ShippingLabelDTO.ts">
+      <CustomToolNamespace>DTOs\Shipping\Econt\ShippingLabelDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="UpdateUserRolesDTO.ts">
+      <CustomToolNamespace>DTOs\Internal\Roles\UpdateUserRolesDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="UserRolesDTO.ts">
+      <CustomToolNamespace>DTOs\Internal\Roles\UserRolesDTO.cs</CustomToolNamespace>
+    </None>
+    <None Update="ValidateAddressResponseDTO.ts">
+      <CustomToolNamespace>DTOs\Shipping\Econt\ValidateAddressResponseDTO.cs</CustomToolNamespace>
+    </None>
+  </ItemGroup>
+
+</Project>
