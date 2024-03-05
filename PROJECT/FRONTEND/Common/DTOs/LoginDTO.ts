@@ -2,5 +2,5 @@
 
 export class LoginDTO { 
     public email: string;
-    public passwordHash: string;
+    public password: string;
 }

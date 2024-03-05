@@ -22,7 +22,6 @@
     <None Include="..\FRONTEND\Common\DTOs\GetCountriesResponseDTO.ts" Link="GetCountriesResponseDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\GetStreetsResponseDTO.ts" Link="GetStreetsResponseDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\LocationDTO.ts" Link="LocationDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\LoginDTO.ts" Link="LoginDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\NomenclatureDTO.ts" Link="NomenclatureDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\OrderDTO.ts" Link="OrderDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\QuarterDTO.ts" Link="QuarterDTO.ts" />

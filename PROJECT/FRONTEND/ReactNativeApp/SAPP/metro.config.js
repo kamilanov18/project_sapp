@@ -1,20 +1,24 @@
+// Learn more https://docs.expo.io/guides/customizing-metro
+const { getDefaultConfig } = require('expo/metro-config');
 
-const path = require('path');
 
-module.exports = {
- transformer: {
-   getTransformOptions: async () => ({
-     transform: {
-       experimentalImportSupport: false,
-       inlineRequires: true,
-     },
-   }),
- },
- resolver: {
-   sourceExts: ['js', 'json', 'ts', 'tsx', 'jsx'],
- },
- watchFolders: [
-   path.resolve(__dirname, '../../Common'),
- ],
- projectRoot: path.resolve(__dirname),
-};
+const {mergeConfig} = require('metro-config')
+const path = require('path')
+
+const projectRoot = path.join(__dirname,'../../../')
+
+const base = getDefaultConfig(projectRoot)
+const config = mergeConfig(base, {
+  projectRoot: projectRoot,
+  resolver: {
+    unstable_enableSymlinks: true,
+    unstable_enablePackageExports: true,
+    sourceExts: ['js', 'jsx', 'ts', 'tsx', 'json'],
+  },
+  watchFolders: [
+    // path.join(__dirname,'../../Common/services'),
+    // path.join(__dirname,'../../Common/DTOs'),
+  ],
+})
+
+module.exports = config;
