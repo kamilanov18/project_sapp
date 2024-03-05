@@ -1,9 +1,7 @@
 ﻿
 
-module Models { 
-    export class ActionDTO { 
-        public id: number;
-        public name: string;
-        public expense: number;
-    }
+export class ActionDTO { 
+    public id: number;
+    public name: string;
+    public expense: number;
 }

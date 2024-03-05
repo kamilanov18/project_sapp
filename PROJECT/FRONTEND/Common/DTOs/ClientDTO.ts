@@ -1,8 +1,6 @@
 ﻿
 
-module Models { 
-    export class ClientDTO { 
-        public name: string;
-        public phones: string[];
-    }
+export class ClientDTO { 
+    public name: string;
+    public phones: string[];
 }

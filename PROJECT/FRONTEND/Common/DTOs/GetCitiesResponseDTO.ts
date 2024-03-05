@@ -1,7 +1,5 @@
 ﻿
 
-module Models { 
-    export class GetCitiesResponseDTO { 
-        public cities: CityDTO[];
-    }
+export class GetCitiesResponseDTO { 
+    public cities: CityDTO[];
 }

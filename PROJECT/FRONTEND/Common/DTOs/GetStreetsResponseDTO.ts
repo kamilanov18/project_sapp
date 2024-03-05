@@ -1,7 +1,5 @@
 ﻿
 
-module Models { 
-    export class GetStreetsResponseDTO { 
-        public streets: StreetDTO[];
-    }
+export class GetStreetsResponseDTO { 
+    public streets: StreetDTO[];
 }

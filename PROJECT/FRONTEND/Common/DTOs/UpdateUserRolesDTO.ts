@@ -1,7 +1,5 @@
 ﻿
 
-module Models { 
-    export class UpdateUserRolesDTO { 
-        public userRoles: UserRolesDTO[];
-    }
+export class UpdateUserRolesDTO { 
+    public userRoles: UserRolesDTO[];
 }

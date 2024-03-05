@@ -1,7 +1,5 @@
 ﻿
 
-module Models { 
-    export class ValidateAddressRequestDTO { 
-        public address: AddressDTO;
-    }
+export class ValidateAddressRequestDTO { 
+    public address: AddressDTO;
 }

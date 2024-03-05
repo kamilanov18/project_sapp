@@ -1,7 +1,5 @@
 ﻿
 
-module Models { 
-    export class ShippingAddressDTO { 
-        public address: AddressDTO;
-    }
+export class ShippingAddressDTO { 
+    public address: AddressDTO;
 }

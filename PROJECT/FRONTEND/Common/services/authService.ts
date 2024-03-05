@@ -1,21 +1,21 @@
 import { BaseService } from "./baseService";
-import * as SecureStore from 'expo-secure-store';
+import { LoginDTO } from '../DTOs/LoginDTO';
 
 export class AuthService extends BaseService{
     protected static readonly _url: string = this._baseUrl+'Auth/';
-    public async login(username: string, password: string): Promise<void> {
+    public async login(dto:LoginDTO): Promise<void> {
         let token = await fetch(AuthService._url+'Login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({username, password})
+            body: JSON.stringify(dto)
         });
         console.log(token);
-        await SecureStore.setItemAsync('auth', "Bearer "+token.toString());
+        this.setAuthToken("Bearer "+token.toString());
     }
 
     public async logout(): Promise<void> {
-        await SecureStore.setItemAsync('auth', "");
+        this.setAuthToken("");
     }
 }
