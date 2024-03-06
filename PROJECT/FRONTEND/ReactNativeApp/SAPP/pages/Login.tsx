@@ -1,5 +1,5 @@
 import { Button, TextField } from "react-native-ui-lib";
-import ServiceContext from "../components/ServiceContext";
+import {ServiceContext} from "../components/ServiceContext";
 import { useContext, useState } from "react";
 
 export default function Login() {
@@ -7,7 +7,7 @@ export default function Login() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
     const submit = () => {
-        ctx.Auth.login({email: email, passwordHash: password})
+        ctx.Auth.login({email: email, password: password})
     }
     return (
         <>

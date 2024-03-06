@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { AuthService } from '../../../Common/services/authService';
+import { AuthService } from 'common/services/authService';
 import * as SecureStore from 'expo-secure-store';
 
 const getToken = (): string => {
@@ -15,5 +15,3 @@ export const services = {
 }
 
 const ServiceContext = createContext(services);
-
-export default ServiceContext;

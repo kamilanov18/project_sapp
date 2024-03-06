@@ -1,3 +1,4 @@
+
 export class BaseService {
     constructor(setAuthToken: (token:string)=>void, getAuthToken: ()=>string) {
         this.setAuthToken = setAuthToken;
