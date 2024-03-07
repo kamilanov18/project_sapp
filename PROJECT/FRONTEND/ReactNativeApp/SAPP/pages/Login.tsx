@@ -1,8 +1,7 @@
-import { TextField } from "react-native-ui-lib";
+import { Button, TextField } from "react-native-ui-lib";
 import ServiceContext from "../components/ServiceContext";
 import { useContext, useState } from "react";
 import React from "react";
-import Button from 'react-native-ui-lib/button';
 
 export default function Login() {
     let ctx = useContext(ServiceContext);
