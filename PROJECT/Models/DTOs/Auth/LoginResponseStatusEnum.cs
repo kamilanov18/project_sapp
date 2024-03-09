@@ -1,6 +1,6 @@
 ﻿namespace Models.DTOs.Auth
 {
-    public enum LoginResponseStatus
+    public enum LoginResponseStatusEnum
     {
         Success,
         InvalidPassword,

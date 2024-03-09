@@ -1,0 +1,12 @@
+{
+    "bg":{
+        "login-page": {
+            "title": "Вход",
+            "login": "Вход",
+            "password": "Парола",
+            "email": "Имейл",
+            "invalid-password": "Невалидна парола",
+            "invalid-email": "Невалиден имейл"
+        }
+    }
+}

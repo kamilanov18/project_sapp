@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { AuthService } from 'common\\services\\authService';
+import { TranslatorService } from 'common\\services\\translatorService';
 import * as SecureStore from 'expo-secure-store';
 
 const getToken = (): string => {
@@ -12,6 +13,7 @@ const setToken = (token:string): void => {
 
 export const services = {
     Auth: new AuthService(setToken, getToken),
+    Translate: new TranslatorService(),
 }
 
 const ServiceContext = createContext(services);

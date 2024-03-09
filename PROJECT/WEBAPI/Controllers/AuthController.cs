@@ -26,17 +26,17 @@ namespace WEBAPI.Controllers
         {
             int? userId;
             var res = _authService.Login(dto,out userId);
-            if(res==LoginResponseStatus.Success)
+            if(res==LoginResponseStatusEnum.Success)
             {
                 _logger.LogInformation("User logged in: " + userId);
                 return Ok(_authService.GenerateJWTToken(userId??0));
             }
-            else if (res == LoginResponseStatus.NoEmailFound)
+            else if (res == LoginResponseStatusEnum.NoEmailFound)
             {
                 _logger.LogInformation("User tried to login with false email");
                 return Unauthorized("No such email found");
             }
-            else if (res == LoginResponseStatus.InvalidPassword)
+            else if (res == LoginResponseStatusEnum.InvalidPassword)
             {
                 _logger.LogInformation("User entered wrong password: " + User.GetId());
                 return Unauthorized("Incorrect password");

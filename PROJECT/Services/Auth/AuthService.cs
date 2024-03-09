@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Models.DTOs.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Services.Auth
@@ -38,19 +39,22 @@ namespace Services.Auth
             return token;
         }
 
-        public LoginResponseStatus Login(LoginDTO dto, out int? userId)
+        public LoginResponseStatusEnum Login(LoginDTO dto, out int? userId)
         {
-            var user = _ctx.IcaksSappUsers.Where(x => x.Email == dto.Email).FirstOrDefault();
-            userId = user is null ? null : user.Id;
-            if (user is null || user == default)
+            using (HMACSHA256 sha = new())
             {
-                return LoginResponseStatus.NoEmailFound;
+                var user = _ctx.IcaksSappUsers.Where(x => x.Email == dto.Email).FirstOrDefault();
+                userId = user is null ? null : user.Id;
+                if (user is null || user == default)
+                {
+                    return LoginResponseStatusEnum.NoEmailFound;
+                }
+                if (user.PasswordHash != dto.Password)
+                {
+                    return LoginResponseStatusEnum.InvalidPassword;
+                }
+                return LoginResponseStatusEnum.Success;
             }
-            if (user.PasswordHash != dto.PasswordHash)
-            {
-                return LoginResponseStatus.InvalidPassword;
-            }
-            return LoginResponseStatus.Success;
         }
     }
 }

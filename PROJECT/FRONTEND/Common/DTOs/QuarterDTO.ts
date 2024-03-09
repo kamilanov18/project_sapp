@@ -1,8 +1,8 @@
 ﻿
 
 export class QuarterDTO { 
-    public id: number;
-    public cityId: number;
-    public name: string;
-    public nameEn: string;
+    public id: number | null;
+    public cityId: number | null;
+    public name: string | null;
+    public nameEn: string | null;
 }

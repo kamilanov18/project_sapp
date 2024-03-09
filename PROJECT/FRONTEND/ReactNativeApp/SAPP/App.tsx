@@ -1,10 +1,24 @@
 import { StyleSheet } from 'react-native';
-import Login from './pages/Login';
+import LoginPage from './pages/LoginPage';
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import OrdersPage from './pages/OrdersPage';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <Login />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={LoginPage}
+        />
+        <Stack.Screen name="Orders" component={OrdersPage} />
+      </Stack.Navigator>
+      
+    </NavigationContainer>
   );
 }
 

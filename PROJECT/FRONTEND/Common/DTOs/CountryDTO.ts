@@ -1,10 +1,10 @@
 ﻿
 
 export class CountryDTO { 
-    public id: number;
-    public code3: string;
-    public code2: string;
-    public name: string;
-    public nameEn: string;
-    public isEU: boolean;
+    public id: number | null;
+    public code3: string | null;
+    public code2: string | null;
+    public name: string | null;
+    public nameEn: string | null;
+    public isEU: boolean | null;
 }

@@ -5,7 +5,7 @@ export class BaseService {
         this.getAuthToken = getAuthToken;
     }
     
-    protected static readonly _baseUrl: string = 'https://localhost:7138/api/';
+    protected static readonly _baseUrl: string = 'https://cd69-78-83-182-147.ngrok-free.app/api/';
     protected setAuthToken: (token:string)=>void;
     protected getAuthToken: ()=>string;
 

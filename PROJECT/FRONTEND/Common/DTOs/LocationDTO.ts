@@ -1,7 +1,7 @@
 ﻿
 
 export class LocationDTO { 
-    public latitude: number;
-    public longtitude: number;
-    public confidence: number;
+    public latitude: number | null;
+    public longtitude: number | null;
+    public confidence: number | null;
 }
