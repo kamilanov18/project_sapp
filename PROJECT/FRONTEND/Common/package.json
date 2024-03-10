@@ -1,6 +1,7 @@
 {
     "name": "common",
     "dependencies": {
-        "@babel/runtime": "^7.24.0"
+        "@babel/runtime": "^7.24.0",
+        "buffer": "^6.0.3"
     }
 }

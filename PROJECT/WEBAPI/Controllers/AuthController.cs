@@ -41,6 +41,11 @@ namespace WEBAPI.Controllers
                 _logger.LogInformation("User entered wrong password: " + User.GetId());
                 return Unauthorized("Incorrect password");
             }
+            else if (res==LoginResponseStatusEnum.FirstTimeLogin)
+            {
+                _logger.LogInformation("User logged in for first time: " + User.GetId());
+                return Unauthorized("First time login");
+            }
             else return BadRequest();
         }
     }

@@ -1,12 +1,59 @@
 {
     "bg":{
+        "common": {
+            "edit": "Редактирай",
+            "delete": "Изтрий",
+            "save": "Запази",
+            "cancel": "Откажи",
+            "confirm": "Потвърди",
+            "yes": "Да",
+            "no": "Не",
+            "search": "Търси",
+            "confirm-delete": "Сигурни ли сте, че искате да изтриете"
+        },
         "login-page": {
             "title": "Вход",
             "login": "Вход",
-            "password": "Парола",
+            "password": "Парола (Оставете празно ако влизате за първи път)",
             "email": "Имейл",
             "invalid-password": "Невалидна парола",
             "invalid-email": "Невалиден имейл"
+        },
+        "change-password-page":{
+            "title": "Задаване на нова парола"
+        },
+        "actions-page": {
+            "title": "Действия",
+            "single": "Действие"
+        },
+        "users-page": {
+            "title": "Потребители",
+            "single": "Потребител",
+            "register": "Регистрирай"
+        },
+        "products-page": {
+            "title": "Продукти",
+            "single": "Продукт"
+        },
+        "profile-page": {
+            "title": "Профил",
+            "change-password": "Промени парола"
+        },
+        "orders-page": {
+            "title": "Поръчки",
+            "single": "Поръчка"
+        },
+        "home-page": {
+            "title": "Начало"
+        },
+        "register-user-page": {
+            "title": "Регистрация на потребител",
+            "email": "Имейл",
+            "first-name": "Първо Име",
+            "last-name": "Фамилия",
+            "phone": "Телефон",
+            "wage": "Заплата",
+            "register": "Регистрирай"
         }
     }
 }

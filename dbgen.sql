@@ -220,3 +220,5 @@ BEGIN
             ) as result)>1)
     );
 END;
+
+select * from icaks_sapp_users

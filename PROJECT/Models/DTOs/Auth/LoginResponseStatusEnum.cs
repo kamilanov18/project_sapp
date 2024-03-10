@@ -4,6 +4,7 @@
     {
         Success,
         InvalidPassword,
-        NoEmailFound
+        NoEmailFound,
+        FirstTimeLogin
     }
 }

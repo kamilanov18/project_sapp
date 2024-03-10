@@ -1,4 +1,4 @@
-import { Button, Incubator, TextField, View } from "react-native-ui-lib";
+import { Assets, Button, Icon, Incubator, TextField } from "react-native-ui-lib";
 import ServiceContext from "../components/ServiceContext";
 import { useContext, useState } from "react";
 import React from "react";
@@ -25,7 +25,7 @@ export default function LoginPage({navigation}:Props) {
         const res = await ctx.Auth.login({email: email, password: password})
         switch (res) {
             case LoginResponseStatusEnum.success: {
-                navigation.navigate('Orders'); 
+                navigation.navigate('Home'); 
                 break;
             }
             case LoginResponseStatusEnum.invalidPassword: {
@@ -38,6 +38,10 @@ export default function LoginPage({navigation}:Props) {
                 setToastMessage(ctx.Translate.get("login-page.invalid-email")); 
                 break;
             }
+            case LoginResponseStatusEnum.firstTimeLogin: {
+                navigation.navigate('ChangePassword'); 
+                break;
+            }
         }
     }
 
@@ -47,16 +51,12 @@ export default function LoginPage({navigation}:Props) {
             <TextField
                 placeholder={ctx.Translate.get("login-page.email")}
                 floatingPlaceholder
-                showCharCounter
-                maxLength={30}
                 onChangeText={setEmail}
             />
     
             <TextField
                 placeholder={ctx.Translate.get("login-page.password")}
                 floatingPlaceholder
-                showCharCounter
-                maxLength={30}
                 secureTextEntry
                 onChangeText={setPassword}
             />
