@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Incubator, Picker, TextField } from "react-native-ui-lib";
 import ServiceContext from "../../components/ServiceContext";
 import { UserDTO } from "common\\DTOs\\UserDTO";
+import { NomenclatureDTO } from "common\\DTOs\\NomenclatureDTO";
 import StyleContext from "../../components/StyleContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -19,8 +20,16 @@ export default function RegisterUserPage({navigation}) {
     const [isToastVisible, setIsToastVisible] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const toggleToastVisibility = () => setIsToastVisible(!isToastVisible);
-    const roles = (await ctx.Roles.getAll())();
+    let roles: NomenclatureDTO<number>[] = [];
 
+    useEffect(() => {
+        const fetchData = async () => {
+          return await ctx.Roles.getAll();
+        }
+
+        fetchData().then(res => roles=res.data);
+      }, []);
+    
     const registerUser = async () => {
         const newUser = new UserDTO({id:0, email: email, firstName: firstName, lastName: lastName, roleIds: roleIds, wage: wage, phone: phone});
         const res = await ctx.Users.register(newUser);
