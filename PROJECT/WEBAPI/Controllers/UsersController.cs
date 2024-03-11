@@ -49,8 +49,14 @@ namespace WEBAPI.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Register(EditUserDTO dto)
         {
-            _logger.LogInformation($"User with id {User.GetId()} created user: {dto.FirstName} {dto.LastName}");
-            _service.Register(dto);
+            try
+            {
+                _service.Register(dto);
+                _logger.LogInformation($"User with id {User.GetId()} created user: {dto.FirstName} {dto.LastName}");
+            } catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
             return Ok();
         }
 

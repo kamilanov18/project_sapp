@@ -1,6 +1,10 @@
 ﻿
 
 export class ActionHistoryDTO { 
+    constructor(obj:Partial<ActionHistoryDTO>) {
+        Object.assign(this,obj);
+    }
+    
     public id: number;
     public actionId: number;
     public actionName: number;

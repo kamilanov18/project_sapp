@@ -3,7 +3,6 @@ import LoginPage from './pages/LoginPage';
 import React, { useContext } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import OrdersPage from './pages/OrdersPage';
 import ServiceContext from './components/ServiceContext';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import HomePage from './pages/HomePage';

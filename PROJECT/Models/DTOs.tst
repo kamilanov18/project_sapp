@@ -5,6 +5,10 @@
     }
 }
 $Classes(*DTO)[
-export class $Name { $Properties[
+export class $Name { 
+    constructor(obj:Partial<$Name>) {
+        Object.assign(this,obj);
+    }
+    $Properties[
     public $name: $Type;]
 }]

@@ -1,6 +1,10 @@
 ﻿
 
 export class ShippingLabelDTO { 
+    constructor(obj:Partial<ShippingLabelDTO>) {
+        Object.assign(this,obj);
+    }
+    
     public senderClient: ClientDTO;
     public receiverClient: ClientDTO;
     public senderAddress: AddressDTO;

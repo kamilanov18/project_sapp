@@ -1,6 +1,9 @@
 ﻿using DataAccess.Data;
+using Microsoft.EntityFrameworkCore;
 using Models.DTOs.Internal.Users;
 using Models.DTOs.Users;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Services.Internal
 {
@@ -14,8 +17,11 @@ namespace Services.Internal
 
         public void ChangePassword(ChangePasswordDTO dto)
         {
-            _ctx.IcaksSappUsers.Find(dto.Id).PasswordHash = dto.PasswordHash;
-            _ctx.SaveChanges();
+            using (HMACSHA256 sha = new())
+            {
+                _ctx.IcaksSappUsers.Find(dto.Id).PasswordHash = sha.ComputeHash(Encoding.UTF8.GetBytes(dto.PasswordHash)).ToString();
+                _ctx.SaveChanges();
+            }
         }
 
         public void Delete(int id)
@@ -26,6 +32,11 @@ namespace Services.Internal
 
         public void Edit(EditUserDTO dto)
         {
+            if (_ctx.IcaksSappUsers.Where(x => x.Email == dto.Email).Any())
+            {
+                throw new InvalidDataException("email-must-be-unique");
+            }
+
             IcaksSappUser user = _ctx.Find<IcaksSappUser>(dto.Id);
             user.Email = dto.Email;
             user.FirstName = dto.FirstName;
@@ -50,7 +61,7 @@ namespace Services.Internal
                         Phone=users.Phone,
                         Wage=users.Wage
                     }
-                    ).First();
+                    ).AsNoTracking().First();
         }
 
         public IQueryable<UserDTO> GetAll()
@@ -65,11 +76,21 @@ namespace Services.Internal
                         Phone = users.Phone,
                         Wage = users.Wage
                     }
-                    );
+                    ).AsNoTracking();
         }
 
         public void Register(EditUserDTO dto)
         {
+            if(_ctx.IcaksSappUsers.Where(x=>x.Email==dto.Email).Any())
+            {
+                throw new InvalidDataException("errors.email-must-be-unique");
+            }
+
+            if (_ctx.IcaksSappUsers.Where(x => x.Phone == dto.Phone).Any())
+            {
+                throw new InvalidDataException("errors.phone-must-be-unique");
+            }
+
             IcaksSappUser user = new()
             {
                 Email = dto.Email,

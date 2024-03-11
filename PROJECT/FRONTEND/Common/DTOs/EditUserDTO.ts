@@ -1,6 +1,10 @@
 ﻿
 
 export class EditUserDTO { 
+    constructor(obj:Partial<EditUserDTO>) {
+        Object.assign(this,obj);
+    }
+    
     public id: number;
     public firstName: string;
     public lastName: string;
