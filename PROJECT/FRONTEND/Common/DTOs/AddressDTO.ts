@@ -1,9 +1,10 @@
 ﻿
 
 export class AddressDTO { 
-    constructor(obj:Partial<AddressDTO>) {
+    constructor(obj: Partial<AddressDTO>) {
         Object.assign(this,obj);
     }
+
     
     public id: number | null;
     public city: CityDTO;

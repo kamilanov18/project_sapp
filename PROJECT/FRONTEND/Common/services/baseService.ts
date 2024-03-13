@@ -7,7 +7,7 @@ export class BaseService {
         this.getAuthToken = getAuthToken;
     }
     
-    protected static readonly _baseUrl: string = 'https://4ec0-78-83-182-147.ngrok-free.app/api/';
+    protected static readonly _baseUrl: string = 'https://51f1-78-83-182-147.ngrok-free.app/api/';
     protected setAuthToken: (token:string)=>void;
     protected getAuthToken: ()=>string;
 
@@ -20,13 +20,7 @@ export class BaseService {
             },
             body: JSON.stringify(body)
         });
-        let tmp!: TRes;
-        let json:string|undefined = typeof tmp === "undefined" ? undefined : await response.json();
-        const res = new ResponseDTO<TRes>();
-        res.code=response.status;
-        res.data= typeof json === "string" ? (JSON.parse(json) as TRes) : undefined;
-        res.error = response.status == 200 ? undefined : await response.text();
-        return res;
+        return this.processResponse<TRes>(response);
     }
 
     protected async generateRequestById<TRes>(url: string, method: HttpMethod, id: number): Promise<ResponseDTO<TRes>>  {
@@ -37,11 +31,7 @@ export class BaseService {
                 'Authorization': this.getAuthToken()
             }
         });
-        let json = await response.json();
-        const res = new ResponseDTO<TRes>();
-        res.code=response.status;
-        res.data=JSON.parse(json) as TRes;
-        return res;
+        return this.processResponse<TRes>(response);
     }
 
     protected async generateRequestNoParams<TRes>(url: string, method: HttpMethod): Promise<ResponseDTO<TRes>>  {
@@ -52,10 +42,15 @@ export class BaseService {
                 'Authorization': this.getAuthToken()
             }
         });
-        let json = await response.json();
+        return this.processResponse<TRes>(response);
+    }
+
+    private async processResponse<TRes>(response: Response): Promise<ResponseDTO<TRes>> {
         const res = new ResponseDTO<TRes>();
-        res.code=response.status;
-        res.data=JSON.parse(json) as TRes;
+        res.code  = response.status;
+        res.data  = response.status == 200 ? (await response.json() as TRes) : undefined;
+        res.error = response.status == 200 ? undefined : await response.text();
+        console.log(res);
         return res;
     }
 }

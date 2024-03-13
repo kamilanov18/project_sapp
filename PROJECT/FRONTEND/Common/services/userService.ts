@@ -1,6 +1,7 @@
 import { ResponseDTO } from "../DTOs/ResponseDTO";
 import { ChangePasswordDTO } from "../DTOs/ChangePasswordDTO";
 import { UserDTO } from "../DTOs/UserDTO";
+import { EditUserDTO } from "../DTOs/EditUserDTO";
 import { BaseService } from "./baseService";
 
 export class UserService extends BaseService {
@@ -14,8 +15,8 @@ export class UserService extends BaseService {
         return this.generateRequestNoParams<UserDTO[]>(UserService._url+'GetAll','GET');
     }
 
-    public async register(dto: UserDTO): Promise<ResponseDTO<undefined>> {
-        return this.generateRequest<UserDTO>(UserService._url+'Register','POST',dto);
+    public async register(dto: EditUserDTO): Promise<ResponseDTO<undefined>> {
+        return this.generateRequest<EditUserDTO>(UserService._url+'Register','POST',dto);
     }
 
     public async edit(dto: UserDTO): Promise<ResponseDTO<undefined>> {

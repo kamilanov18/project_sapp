@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Incubator, Picker, TextField } from "react-native-ui-lib";
 import ServiceContext from "../../components/ServiceContext";
-import { UserDTO } from "common\\DTOs\\UserDTO";
+import { EditUserDTO } from "common\\DTOs\\EditUserDTO";
 import { NomenclatureDTO } from "common\\DTOs\\NomenclatureDTO";
 import StyleContext from "../../components/StyleContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -19,24 +19,28 @@ export default function RegisterUserPage({navigation}) {
     const [phone, setPhone] = useState('');
     const [isToastVisible, setIsToastVisible] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
+    const [roles, setRoles] = useState<NomenclatureDTO<number>[]>([]);
     const toggleToastVisibility = () => setIsToastVisible(!isToastVisible);
-    let roles: NomenclatureDTO<number>[] = [];
 
     useEffect(() => {
         const fetchData = async () => {
           return await ctx.Roles.getAll();
         }
 
-        fetchData().then(res => roles=res.data);
+        fetchData().then(res => {
+            setRoles(res.data); 
+        });
       }, []);
     
     const registerUser = async () => {
-        const newUser = new UserDTO({id:0, email: email, firstName: firstName, lastName: lastName, roleIds: roleIds, wage: wage, phone: phone});
+        
+        const newUser = new EditUserDTO({id:0, email: email, firstName: firstName, lastName: lastName, roleIds: roleIds, wage: wage, phone: phone});
         const res = await ctx.Users.register(newUser);
+        console.log(res);
         if(res.code==200) {
-            //navigation.navigate('UsersPage');
+            console.log("vlizam")
+            navigation.navigate("UsersPage");
         } else if (res.code==400) {
-            console.log(res.error);
             setToastMessage(ctx.Translate.get(res.error));
             setIsToastVisible(true);
         }
@@ -87,8 +91,9 @@ export default function RegisterUserPage({navigation}) {
 
         <Picker
           placeholder={ctx.Translate.get("register-user-page.roles")}
+          floatingPlaceholder
           mode={Picker.modes.MULTI}
-          onChange={value => setRoleIds([...roleIds,(value?.valueOf() as number)])}>
+          onChange={value => setRoleIds(value as number[])}>
             {roles.map(role => (
               <Picker.Item key={role.id} value={role.id} label={role.name}/>
             ))}

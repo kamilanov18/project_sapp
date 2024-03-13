@@ -229,3 +229,5 @@ create table icaks_sapp_products (
     weight decimal(8,2),
     FOREIGN KEY (product_id) REFERENCES bizlabbg_ican.icaks_wc_product_meta_lookup(product_id)
 ) engine = MyISAM;
+
+

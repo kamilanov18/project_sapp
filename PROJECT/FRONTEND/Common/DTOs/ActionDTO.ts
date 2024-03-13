@@ -1,9 +1,10 @@
 ﻿
 
 export class ActionDTO { 
-    constructor(obj:Partial<ActionDTO>) {
+    constructor(obj: Partial<ActionDTO>) {
         Object.assign(this,obj);
     }
+
     
     public id: number;
     public name: string;

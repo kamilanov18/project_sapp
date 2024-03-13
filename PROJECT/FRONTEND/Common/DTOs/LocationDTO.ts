@@ -1,9 +1,10 @@
 ﻿
 
 export class LocationDTO { 
-    constructor(obj:Partial<LocationDTO>) {
+    constructor(obj: Partial<LocationDTO>) {
         Object.assign(this,obj);
     }
+
     
     public latitude: number | null;
     public longtitude: number | null;

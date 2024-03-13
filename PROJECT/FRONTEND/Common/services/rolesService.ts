@@ -28,10 +28,10 @@ export class RolesService extends BaseService {
     }
 
     public async getAUsersRoles(id: number): Promise<ResponseDTO<NomenclatureDTO<number>[]>> {
-        return this.generateRequestById<NomenclatureDTO<number>[]>(RoleService._url+'GetAUsersRoles','GET',id);
+        return this.generateRequestById<NomenclatureDTO<number>[]>(RolesService._url+'GetAUsersRoles','GET',id);
     }
 
     public async getAllUsersInRole(id: number): Promise<ResponseDTO<UserDTO[]>> {
-        return this.generateRequestById<UserDTO[]>(RoleService._url+'GetAllUsersInRole','GET',id);
+        return this.generateRequestById<UserDTO[]>(RolesService._url+'GetAllUsersInRole','GET',id);
     }
 }

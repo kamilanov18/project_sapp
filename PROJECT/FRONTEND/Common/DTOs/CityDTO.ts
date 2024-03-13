@@ -1,9 +1,10 @@
 ﻿
 
 export class CityDTO { 
-    constructor(obj:Partial<CityDTO>) {
+    constructor(obj: Partial<CityDTO>) {
         Object.assign(this,obj);
     }
+
     
     public country: CountryDTO;
     public name: string | null;

@@ -81,7 +81,12 @@ namespace Services.Internal
 
         public void Register(EditUserDTO dto)
         {
-            if(_ctx.IcaksSappUsers.Where(x=>x.Email==dto.Email).Any())
+            if (dto.Wage>9999.99m)
+            {
+                throw new InvalidDataException("errors.wage-limit");
+            }
+
+            if (_ctx.IcaksSappUsers.Where(x=>x.Email==dto.Email).Any())
             {
                 throw new InvalidDataException("errors.email-must-be-unique");
             }
@@ -102,6 +107,11 @@ namespace Services.Internal
             };
 
             _ctx.IcaksSappUsers.Add(user);
+            _ctx.SaveChanges();
+
+            user = _ctx.IcaksSappUsers.Where(x=>x.Email==dto.Email).First();
+            dto.RoleIds.ForEach(rid => _ctx.IcaksSappUsersRoles.Add(new() { RoleId = rid, UserId = user.Id }));
+
             _ctx.SaveChanges();
         }
     }

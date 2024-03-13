@@ -8,5 +8,6 @@
         public string Email { get; set; }
         public decimal? Wage { get; set; }
         public string Phone { get; set; }
+        public List<int> RoleIds { get; set; }
     }
 }
