@@ -1,4 +1,6 @@
-﻿namespace Models.DTOs.Internal.Orders
+﻿using Models.DTOs.Internal.Products;
+
+namespace Models.DTOs.Internal.Orders
 {
     public class OrderDTO
     {
@@ -7,8 +9,7 @@
         public string ClientNames { get; set; }
         public bool IsPossibleDuplicate { get; set; }
         public string ClientAddress { get; set; }
-        public string Products { get; set; }
-        public string ProductCounts { get; set; }
+        public List<ProductItemDTO> Products { get; set; }
 
     }
 }

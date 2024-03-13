@@ -215,6 +215,8 @@ public partial class BizlabbgIcanContext : DbContext
 
     public virtual DbSet<IcaksSappOrder> IcaksSappOrders { get; set; }
 
+    public virtual DbSet<IcaksSappProduct> IcaksSappProducts { get; set; }
+
     public virtual DbSet<IcaksSappRole> IcaksSappRoles { get; set; }
 
     public virtual DbSet<IcaksSappStatus> IcaksSappStatuses { get; set; }
@@ -3099,6 +3101,21 @@ public partial class BizlabbgIcanContext : DbContext
             entity.Property(e => e.StatusId).HasColumnName("status_id");
         });
 
+        modelBuilder.Entity<IcaksSappProduct>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_products");
+
+            entity.HasIndex(e => e.ProductId, "product_id");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.Weight)
+                .HasPrecision(8)
+                .HasColumnName("weight");
+        });
+
         modelBuilder.Entity<IcaksSappRole>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
@@ -3144,7 +3161,7 @@ public partial class BizlabbgIcanContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("password_hash");
             entity.Property(e => e.Phone)
-                .HasMaxLength(20)
+                .HasMaxLength(10)
                 .HasColumnName("phone");
             entity.Property(e => e.Wage)
                 .HasPrecision(6)

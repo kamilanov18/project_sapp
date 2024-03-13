@@ -1,15 +1,19 @@
 ﻿using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
+using Services.Auth;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace Services.Helping
 {
     public class DBSeedingService : IDBSeedingService
     {
         BizlabbgIcanContext _ctx;
-        public DBSeedingService(BizlabbgIcanContext ctx)
+        IAuthService _authService;
+        public DBSeedingService(BizlabbgIcanContext ctx, IAuthService authService)
         {
             _ctx = ctx;
+            _authService = authService;
         }
 
         public void ConvertForeignTableOrdersToNativeTableOrders()
@@ -85,11 +89,11 @@ namespace Services.Helping
             IcaksSappUser admin = new()
             {
                 Email = "a@a",
-                PasswordHash = "123",
                 FirstName = "Admin",
                 LastName = "Admin",
                 Phone = "0888208415",
-            };
+                PasswordHash = _authService.ComputeSha256Hash("123")
+            };  
 
             List<IcaksSappRole> roles = new()
             {

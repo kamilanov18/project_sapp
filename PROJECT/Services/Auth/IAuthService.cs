@@ -6,5 +6,6 @@ namespace Services.Auth
     {
         public string GenerateJWTToken(int userId);
         public LoginResponseStatusEnum Login(LoginDTO dto, out int? userId);
+        public string ComputeSha256Hash(string rawData);
     }
 }

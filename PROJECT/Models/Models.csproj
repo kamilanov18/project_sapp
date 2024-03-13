@@ -17,6 +17,7 @@
     <None Include="..\FRONTEND\Common\DTOs\ClientDTO.ts" Link="ClientDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\CountryDTO.ts" Link="CountryDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\EcontShipmentDTO.ts" Link="EcontShipmentDTO.ts" />
+    <None Include="..\FRONTEND\Common\DTOs\EditOrderDetailsDTO.ts" Link="EditOrderDetailsDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\EditUserDTO.ts" Link="EditUserDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\GetCitiesResponseDTO.ts" Link="GetCitiesResponseDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\GetCountriesResponseDTO.ts" Link="GetCountriesResponseDTO.ts" />
@@ -25,7 +26,10 @@
     <None Include="..\FRONTEND\Common\DTOs\LoginDTO.ts" Link="LoginDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\LoginResponseStatusEnum.ts" Link="LoginResponseStatusEnum.ts" />
     <None Include="..\FRONTEND\Common\DTOs\NomenclatureDTO.ts" Link="NomenclatureDTO.ts" />
+    <None Include="..\FRONTEND\Common\DTOs\OrderDetailsDTO.ts" Link="OrderDetailsDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\OrderDTO.ts" Link="OrderDTO.ts" />
+    <None Include="..\FRONTEND\Common\DTOs\ProductDTO.ts" Link="ProductDTO.ts" />
+    <None Include="..\FRONTEND\Common\DTOs\ProductItemDTO.ts" Link="ProductItemDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\QuarterDTO.ts" Link="QuarterDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\ShippingAddressDTO.ts" Link="ShippingAddressDTO.ts" />
     <None Include="..\FRONTEND\Common\DTOs\ShippingLabelDTO.ts" Link="ShippingLabelDTO.ts" />
