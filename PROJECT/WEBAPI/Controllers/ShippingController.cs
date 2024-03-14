@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models.DTOs.Internal.Orders;
 using Models.DTOs.Shipping.Econt;
 using Services.Shipping;
 using System.Text.Json;
@@ -21,18 +22,23 @@ namespace WEBAPI.Controllers
 
         [Authorize(Roles = "admin, caller")]
         [HttpPost]
-        public async Task<IActionResult> ShipToEcont(EcontShipmentDTO dto)
+        public async Task<IActionResult> ShipToEcont(OrderDetailsDTO dto)
         {
+            EcontShipmentDTO shipment = new();
             try
             {
-                var res = await _econtService.SendShipmentAsync(dto);
+                shipment.Mode = "create";
+                shipment.Label.ReceiverAddress = (AddressDTO)dto.Address;
+                shipment.Label.Weight = dto.Products.Sum(x => x.Count);
+
+                var res = await _econtService.SendShipmentAsync(shipment);
                 res.Content.ReadAsStream().CopyTo(Console.OpenStandardOutput());
-                _logger.LogInformation($"User with id: {User.GetId()} sent econt shipment to: {dto.Label.ReceiverClient.Name}");
+                _logger.LogInformation($"User with id: {User.GetId()} sent econt shipment to: {shipment.Label.ReceiverClient.Name}");
                 return Ok();
             } 
             catch (Exception ex)
             {
-                _logger.LogInformation($"User with id: {User.GetId()} tried sending econt shipment to: {dto.Label.ReceiverClient.Name}, but failed");
+                _logger.LogInformation($"User with id: {User.GetId()} tried sending econt shipment to: {shipment.Label.ReceiverClient.Name}, but failed");
                 return BadRequest(ex.Message);
             }
         }
@@ -71,7 +77,7 @@ namespace WEBAPI.Controllers
         {
             try
             {
-                var res = await _econtService.EcontGetCountries();
+                var res = await _econtService.GetCountries();
                 _logger.LogInformation($"User with id: {User.GetId()} got all econt countries");
                 return Ok(res);
             }
@@ -88,7 +94,7 @@ namespace WEBAPI.Controllers
         {
             try
             {
-                var res = await _econtService.EcontGetCities(countryCode);
+                var res = await _econtService.GetCities(countryCode);
                 _logger.LogInformation($"User with id: {User.GetId()} got all econt cities for {countryCode}");
                 return Ok(res);
             }
@@ -105,7 +111,7 @@ namespace WEBAPI.Controllers
         {
             try
             {
-                var res = await _econtService.EcontGetStreets(cityId);
+                var res = await _econtService.GetStreets(cityId);
                 _logger.LogInformation($"User with id: {User.GetId()} got all econt cities for {cityId}");
                 return Ok(res);
             }

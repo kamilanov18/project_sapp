@@ -215,6 +215,8 @@ public partial class BizlabbgIcanContext : DbContext
 
     public virtual DbSet<IcaksSappOrder> IcaksSappOrders { get; set; }
 
+    public virtual DbSet<IcaksSappOrdersEcont> IcaksSappOrdersEconts { get; set; }
+
     public virtual DbSet<IcaksSappProduct> IcaksSappProducts { get; set; }
 
     public virtual DbSet<IcaksSappRole> IcaksSappRoles { get; set; }
@@ -3099,6 +3101,21 @@ public partial class BizlabbgIcanContext : DbContext
             entity.Property(e => e.ForeignOrderTableId).HasColumnName("foreign_order_table_id");
             entity.Property(e => e.IsPossibleDuplicate).HasColumnName("is_possible_duplicate");
             entity.Property(e => e.StatusId).HasColumnName("status_id");
+        });
+
+        modelBuilder.Entity<IcaksSappOrdersEcont>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_orders_econt");
+
+            entity.HasIndex(e => e.OrderId, "order_id");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.ShipmentNumber)
+                .HasMaxLength(100)
+                .HasColumnName("shipment_number");
         });
 
         modelBuilder.Entity<IcaksSappProduct>(entity =>

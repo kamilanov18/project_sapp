@@ -1,6 +1,6 @@
 ﻿using Models.DTOs.Internal.Products;
 
-namespace Services
+namespace Services.Internal
 {
     public interface IProductsService
     {

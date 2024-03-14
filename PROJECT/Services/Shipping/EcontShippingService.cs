@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace Services.Shipping
 {
-    public class EcontShippingService : IShippingService
+    public class EcontShippingService : IEcontShippingService
     {
         private static readonly string _url = "https://demo.econt.com/ee/services/";
         public string GenerateWaybill(int orderId)
@@ -60,7 +60,7 @@ namespace Services.Shipping
 
         }
 
-        public async Task<List<CountryDTO>> EcontGetCountries()
+        public async Task<List<CountryDTO>> GetCountries()
         {
             var client = new HttpClient();
             HttpRequestMessage msg = new()
@@ -77,7 +77,7 @@ namespace Services.Shipping
             ).Countries;
         }
 
-        public async Task<List<CityDTO>> EcontGetCities(string countryCode)
+        public async Task<List<CityDTO>> GetCities(string countryCode)
         {
             var client = new HttpClient();
             var content = new StringContent(JsonSerializer.Serialize(
@@ -100,7 +100,7 @@ namespace Services.Shipping
             ).Cities;
         }
 
-        public async Task<List<StreetDTO>> EcontGetStreets(string cityId)
+        public async Task<List<StreetDTO>> GetStreets(string cityId)
         {
             var client = new HttpClient();
             var content = new StringContent(JsonSerializer.Serialize(
@@ -123,7 +123,7 @@ namespace Services.Shipping
             ).Streets;
         }
 
-        public Task<List<QuarterDTO>> EcontGetQuarters(int cityId)
+        public Task<List<QuarterDTO>> GetQuarters(int cityId)
         {
             throw new NotImplementedException();
         }

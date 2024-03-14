@@ -13,12 +13,11 @@ namespace Services.Internal
         }
         public void Edit(ProductDTO dto)
         {
-            
             try
             {
                 IcaksSappProduct model = _ctx.IcaksSappProducts.Where(x=>x.Id==dto.Id).First();
-
                 model.Weight = dto.Weight;
+                
 
                 _ctx.SaveChanges();
             } 

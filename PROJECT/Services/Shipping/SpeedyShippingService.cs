@@ -10,17 +10,12 @@ namespace Services.Shipping
             throw new NotImplementedException();
         }
 
-        public Task<List<CountryDTO>> EcontGetCountries()
+        public Task<List<CountryDTO>> GetCountries()
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<QuarterDTO>> EcontGetQuarters(int cityId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<string>> EcontGetStreets(int cityId)
+        public Task<List<QuarterDTO>> GetQuarters(int cityId)
         {
             throw new NotImplementedException();
         }
@@ -41,6 +36,16 @@ namespace Services.Shipping
         }
 
         public Task<HttpResponseMessage> ValidateAddress(ShippingAddressDTO addressDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CityDTO>> GetCities(string countryCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<StreetDTO>> GetStreets(string cityId)
         {
             throw new NotImplementedException();
         }

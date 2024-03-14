@@ -1,6 +1,6 @@
 ﻿namespace Models.DTOs.Shipping.Econt
 {
-    public class AddressDTO
+    public class AddressDTO : IAddressDTO
     {
         public int? Id { get; set; }
         public CityDTO? City { get; set; }

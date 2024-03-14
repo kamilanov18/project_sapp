@@ -7,41 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\FRONTEND\Common\DTOs\ActionDTO.ts" Link="ActionDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ActionHistoryDTO.ts" Link="ActionHistoryDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ActionRecordDTO.ts" Link="ActionRecordDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ActionReportDTO.ts" Link="ActionReportDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\AddressDTO.ts" Link="AddressDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ChangePasswordDTO.ts" Link="ChangePasswordDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\CityDTO.ts" Link="CityDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ClientDTO.ts" Link="ClientDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\CountryDTO.ts" Link="CountryDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\EcontShipmentDTO.ts" Link="EcontShipmentDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\EditOrderDetailsDTO.ts" Link="EditOrderDetailsDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\EditUserDTO.ts" Link="EditUserDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\GetCitiesResponseDTO.ts" Link="GetCitiesResponseDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\GetCountriesResponseDTO.ts" Link="GetCountriesResponseDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\GetStreetsResponseDTO.ts" Link="GetStreetsResponseDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\LocationDTO.ts" Link="LocationDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\LoginDTO.ts" Link="LoginDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\LoginResponseStatusEnum.ts" Link="LoginResponseStatusEnum.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\NomenclatureDTO.ts" Link="NomenclatureDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\OrderDetailsDTO.ts" Link="OrderDetailsDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\OrderDTO.ts" Link="OrderDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ProductDTO.ts" Link="ProductDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ProductItemDTO.ts" Link="ProductItemDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\QuarterDTO.ts" Link="QuarterDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ShippingAddressDTO.ts" Link="ShippingAddressDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ShippingLabelDTO.ts" Link="ShippingLabelDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\StreetDTO.ts" Link="StreetDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\UpdateUserRolesDTO.ts" Link="UpdateUserRolesDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\UserDTO.ts" Link="UserDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\UserRolesDTO.ts" Link="UserRolesDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ValidateAddressRequestDTO.ts" Link="ValidateAddressRequestDTO.ts" />
-    <None Include="..\FRONTEND\Common\DTOs\ValidateAddressResponseDTO.ts" Link="ValidateAddressResponseDTO.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="ActionHistoryDTO.ts">
       <CustomToolNamespace>DTOs\Internal\Actions\ActionHistoryDTO.cs</CustomToolNamespace>
     </None>
@@ -81,6 +46,10 @@
     <None Update="ValidateAddressResponseDTO.ts">
       <CustomToolNamespace>DTOs\Shipping\Econt\ValidateAddressResponseDTO.cs</CustomToolNamespace>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\Shipping\Speedy\" />
   </ItemGroup>
 
 </Project>

@@ -167,6 +167,7 @@ truncate table icaks_sapp_orders;
 truncate table icaks_sapp_actions;
 truncate table icaks_sapp_statuses;
 truncate table icaks_sapp_foreign_order_table;
+truncate table icaks_sapp_orders_econt;
 
 create trigger if not exists is_entry_duplicate
 after insert
@@ -230,4 +231,10 @@ create table icaks_sapp_products (
     FOREIGN KEY (product_id) REFERENCES bizlabbg_ican.icaks_wc_product_meta_lookup(product_id)
 ) engine = MyISAM;
 
+create table icaks_sapp_orders_econt (
+    id int not null primary key,
+    order_id int not null,
+    shipment_number varchar(100),
+    FOREIGN KEY (order_id) REFERENCES  icaks_sapp_orders(id)
+) engine = MyISAM;
 

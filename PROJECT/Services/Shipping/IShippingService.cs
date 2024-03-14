@@ -8,10 +8,10 @@ namespace Services.Shipping
         public string GenerateWaybill(int orderId);
         public Task<HttpResponseMessage> SendShipmentAsync(ShippingDetails shippingDetails);
         public Task<HttpResponseMessage> ValidateAddress(ShippingAddressDTO addressDTO);
-        public Task<List<CountryDTO>> EcontGetCountries();
-        public Task<List<CityDTO>> EcontGetCities(string countryCode);
-        public Task<List<StreetDTO>> EcontGetStreets(string cityId);
-        public Task<List<QuarterDTO>> EcontGetQuarters(int cityId);
+        public Task<List<CountryDTO>> GetCountries();
+        public Task<List<CityDTO>> GetCities(string countryCode);
+        public Task<List<StreetDTO>> GetStreets(string cityId);
+        public Task<List<QuarterDTO>> GetQuarters(int cityId);
         //public List<OrderTrackingDTO> GetTrackingDetails(int orderId);
 
     }

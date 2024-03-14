@@ -1,4 +1,5 @@
-﻿using Models.DTOs.Shipping;
+﻿using Models.DTOs.Internal.Products;
+using Models.DTOs.Shipping;
 
 namespace Models.DTOs.Internal.Orders
 {
@@ -9,5 +10,6 @@ namespace Models.DTOs.Internal.Orders
         public string ClientLastName { get; set; }
         public string ProvidedAddress { get; set; }
         public IAddressDTO Address { get; set; }
+        public List<ProductItemDTO> Products { get; set; }
     }
 }

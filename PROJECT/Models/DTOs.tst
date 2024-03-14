@@ -2,6 +2,7 @@
     Template(Settings s)
     {
         s.OutputDirectory="../FRONTEND/Common/DTOs";
+        s.SkipAddingGeneratedFilesToProject=true;
     }
 }
 $Classes(*DTO)[

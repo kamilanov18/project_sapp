@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Org.BouncyCastle.Asn1.X509.Qualified;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Services.Shipping
 {
