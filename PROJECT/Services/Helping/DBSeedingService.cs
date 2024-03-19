@@ -1,6 +1,7 @@
 ﻿using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Services.Auth;
+using Services.Shipping;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,10 +11,12 @@ namespace Services.Helping
     {
         BizlabbgIcanContext _ctx;
         IAuthService _authService;
-        public DBSeedingService(BizlabbgIcanContext ctx, IAuthService authService)
+        IShippingService _econtService;
+        public DBSeedingService(BizlabbgIcanContext ctx, IAuthService authService, ShippingServiceResolver resolver)
         {
             _ctx = ctx;
             _authService = authService;
+            _econtService = resolver.Resolve("econt");
         }
 
         public void ConvertForeignTableOrdersToNativeTableOrders()
@@ -81,7 +84,7 @@ namespace Services.Helping
                            select new {a.Address1}).AsNoTracking().ToList();
             return duplicateRows.Count>1;
         }
-        public void SeedDatabase()
+        public async Task SeedDatabase()
         {
             if (_ctx.IcaksSappUsers.Count() > 0)
                 return;
@@ -125,6 +128,34 @@ namespace Services.Helping
                 new() {Name="Cancelled"},
                 new() {Name="Failed"},
             };
+
+            IcaksSappEcontAddress senderAddress = new()
+            {
+                Street = "ул. Горна Баня",
+                Num = "21",
+                Zip = "1234",
+                CityId = 2
+            };
+
+            IcaksSappEcontClient senderClient = new()
+            {
+                Name = "Ba40 Kiro"
+            };
+            IcaksSappEcontPhone phone = new()
+            {
+                Phone = "088maikatanarosen",
+                ClientId = 1
+            };
+
+            var econtCities = await _econtService.GetCities("BGR");
+            var econtCountries = await _econtService.GetCountries();
+
+            _ctx.IcaksSappEcontAddresses.Add(senderAddress);
+            _ctx.IcaksSappEcontClients.Add(senderClient);
+            _ctx.IcaksSappEcontPhones.Add(phone);
+
+            _ctx.IcaksSappEcontCities.AddRange(econtCities.Select(x=>new IcaksSappEcontCity() { CountryCode=x.Country.Code3,Name=x.Name,PostCode=x.PostCode}));
+            _ctx.IcaksSappEcontCountries.AddRange(econtCountries.Select(x=>new IcaksSappEcontCountry() { Code3=x.Code3,Code2=x.Code2}));
 
             _ctx.IcaksSappUsers.Add(admin);
             _ctx.IcaksSappRoles.AddRange(roles);

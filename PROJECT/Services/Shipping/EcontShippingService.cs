@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataAccess.Data;
+using Microsoft.AspNetCore.Http;
 using Models.DTOs.Shipping;
 using Models.DTOs.Shipping.Econt;
 using System.Net.Http.Json;
@@ -9,6 +10,11 @@ namespace Services.Shipping
     public class EcontShippingService : IEcontShippingService
     {
         private static readonly string _url = "https://demo.econt.com/ee/services/";
+        BizlabbgIcanContext _ctx;
+        public EcontShippingService(BizlabbgIcanContext contex)
+        {
+            _ctx = contex;
+        }
         public string GenerateWaybill(int orderId)
         {
             throw new NotImplementedException();
@@ -126,6 +132,48 @@ namespace Services.Shipping
         public Task<List<QuarterDTO>> GetQuarters(int cityId)
         {
             throw new NotImplementedException();
+        }
+
+        public ClientDTO GetSenderClient()
+        {
+            return (from c in _ctx.IcaksSappEcontClients
+                    select new ClientDTO()
+                    {
+                        Name = c.Name,
+                        Phones = (from p in _ctx.IcaksSappEcontPhones
+                                  where p.ClientId == c.Id
+                                  select p.Phone).ToList(),
+                    }).Take(1).First();
+        }
+
+        public AddressDTO GetSenderAddress()
+        {
+            return (from a in _ctx.IcaksSappEcontAddresses
+                    select new AddressDTO
+                    {
+                        City = (from c in _ctx.IcaksSappEcontCities
+                                where c.Id == a.CityId
+                                select new CityDTO
+                                {
+                                    Country = (from cr in _ctx.IcaksSappEcontCountries
+                                               where cr.Code3 == c.CountryCode
+                                               select new CountryDTO
+                                               {
+                                                   Code2 = cr.Code2,
+                                                   Code3 = cr.Code3,
+                                                    Name=cr.Name 
+                                               }).Take(1).First(),
+                                    Id = c.Id,
+                                    PostCode=c.PostCode,
+                                    Name=c.Name,
+                                }).First(),
+                        Num=a.Num, 
+                        Id=a.Id,
+                        FullAddress=a.FullAddress,
+                        Quarter=a.Quarter,
+                        Street=a.Street,
+                        Other=a.Other
+                    }).Take(1).First();
         }
     }
 }

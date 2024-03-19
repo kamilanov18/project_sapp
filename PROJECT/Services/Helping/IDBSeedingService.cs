@@ -2,7 +2,7 @@
 {
     public interface IDBSeedingService
     {
-        void SeedDatabase();
+        Task SeedDatabase();
         public void ConvertForeignTableOrdersToNativeTableOrders();
     }
 }

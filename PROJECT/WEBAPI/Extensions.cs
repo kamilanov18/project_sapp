@@ -51,7 +51,7 @@ namespace WEBAPI
 
         public static IServiceCollection AddServiceLayerShippingServices(this IServiceCollection services)
         {
-            services.AddScoped<IShippingService, EcontShippingService>();
+            services.AddScoped<IShippingService, EcontShippingService>(x=>new EcontShippingService(x.GetService<BizlabbgIcanContext>()));
             services.AddScoped<IShippingService, SpeedyShippingService>();
             services.AddSingleton<ShippingServiceResolver>(opt=>new ShippingServiceResolver(services));
 
@@ -61,7 +61,15 @@ namespace WEBAPI
         public static IServiceCollection AddHelperServices(this IServiceCollection services)
         {
             services.AddScoped<IDBSeedingService, DBSeedingService>(x=> 
-                new DBSeedingService(x.GetService<BizlabbgIcanContext>(), x.GetService<IAuthService>())
+                new DBSeedingService(
+                    x.GetService<BizlabbgIcanContext>(), 
+                    x.GetService<IAuthService>(),
+                    x.GetService<ShippingServiceResolver>())
+            );
+            services.AddScoped<INomenclatureService, NomenclatureService>(x =>
+            new NomenclatureService(
+                x.GetService<BizlabbgIcanContext>(),
+                x.GetService<ShippingServiceResolver>())
             );
             return services;
         }

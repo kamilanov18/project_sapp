@@ -211,6 +211,18 @@ public partial class BizlabbgIcanContext : DbContext
 
     public virtual DbSet<IcaksSappActionHistory> IcaksSappActionHistories { get; set; }
 
+    public virtual DbSet<IcaksSappEcontAddress> IcaksSappEcontAddresses { get; set; }
+
+    public virtual DbSet<IcaksSappEcontCity> IcaksSappEcontCities { get; set; }
+
+    public virtual DbSet<IcaksSappEcontClient> IcaksSappEcontClients { get; set; }
+
+    public virtual DbSet<IcaksSappEcontCountry> IcaksSappEcontCountries { get; set; }
+
+    public virtual DbSet<IcaksSappEcontOrder> IcaksSappEcontOrders { get; set; }
+
+    public virtual DbSet<IcaksSappEcontPhone> IcaksSappEcontPhones { get; set; }
+
     public virtual DbSet<IcaksSappForeignOrderTable> IcaksSappForeignOrderTables { get; set; }
 
     public virtual DbSet<IcaksSappOrder> IcaksSappOrders { get; set; }
@@ -3070,6 +3082,134 @@ public partial class BizlabbgIcanContext : DbContext
                 .HasColumnName("date");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+        });
+
+        modelBuilder.Entity<IcaksSappEcontAddress>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_econt_addresses");
+
+            entity.HasIndex(e => e.CityId, "city_id");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CityId).HasColumnName("city_id");
+            entity.Property(e => e.FullAddress)
+                .HasMaxLength(200)
+                .HasColumnName("fullAddress");
+            entity.Property(e => e.Num)
+                .HasMaxLength(5)
+                .IsFixedLength()
+                .HasColumnName("num");
+            entity.Property(e => e.Other)
+                .HasMaxLength(100)
+                .IsFixedLength()
+                .HasColumnName("other");
+            entity.Property(e => e.Quarter)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("quarter");
+            entity.Property(e => e.Street)
+                .HasMaxLength(100)
+                .IsFixedLength()
+                .HasColumnName("street");
+            entity.Property(e => e.Zip)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("zip");
+        });
+
+        modelBuilder.Entity<IcaksSappEcontCity>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("icaks_sapp_econt_cities");
+
+            entity.HasIndex(e => e.CountryCode, "country_code");
+
+            entity.Property(e => e.CountryCode)
+                .HasMaxLength(3)
+                .IsFixedLength()
+                .HasColumnName("country_code");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .HasColumnName("name");
+            entity.Property(e => e.PostCode)
+                .HasMaxLength(6)
+                .IsFixedLength()
+                .HasColumnName("post_code");
+        });
+
+        modelBuilder.Entity<IcaksSappEcontClient>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_econt_clients");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .IsFixedLength()
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<IcaksSappEcontCountry>(entity =>
+        {
+            entity.HasKey(e => e.Code3).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_econt_countries");
+
+            entity.Property(e => e.Code3)
+                .HasMaxLength(3)
+                .IsFixedLength()
+                .HasColumnName("code3");
+            entity.Property(e => e.Code2)
+                .HasMaxLength(2)
+                .IsFixedLength()
+                .HasColumnName("code2");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<IcaksSappEcontOrder>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("icaks_sapp_econt_orders");
+
+            entity.HasIndex(e => e.AddressId, "address_id");
+
+            entity.HasIndex(e => e.ClientId, "client_id");
+
+            entity.HasIndex(e => e.OrderId, "order_id");
+
+            entity.Property(e => e.AddressId).HasColumnName("address_id");
+            entity.Property(e => e.ClientId).HasColumnName("client_id");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.ShipmentNumber)
+                .HasMaxLength(100)
+                .IsFixedLength()
+                .HasColumnName("shipment_number");
+        });
+
+        modelBuilder.Entity<IcaksSappEcontPhone>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("icaks_sapp_econt_phones");
+
+            entity.HasIndex(e => e.ClientId, "client_id");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ClientId).HasColumnName("client_id");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(20)
+                .IsFixedLength()
+                .HasColumnName("phone");
         });
 
         modelBuilder.Entity<IcaksSappForeignOrderTable>(entity =>

@@ -238,3 +238,57 @@ create table icaks_sapp_orders_econt (
     FOREIGN KEY (order_id) REFERENCES  icaks_sapp_orders(id)
 ) engine = MyISAM;
 
+CREATE TABLE icaks_sapp_econt_clients (
+    id int not null primary key,
+    name char(100) not null
+) engine=MyISAM;
+
+CREATE TABLE icaks_sapp_econt_phones (
+    id int not null primary key,
+    phone char(20) not null,
+    client_id int not null,
+    FOREIGN KEY (client_id) REFERENCES icaks_sapp_econt_clients(id)
+) engine = MyISAM;
+
+create table icaks_sapp_econt_countries(
+    code3 char(3) not null primary key,
+    code2 char(2)
+) engine =MyISAM;
+
+create  table icaks_sapp_econt_cities(
+    id int not null,
+    name varchar(50) not null,
+    post_code char(6) not null,
+    country_code char(3) not null,
+    FOREIGN KEY (country_code) REFERENCES icaks_sapp_econt_countries(code3)
+) engine = MyISAM;
+
+drop table icaks_sapp_econt_addresses;
+
+create table icaks_sapp_econt_addresses (
+    id int not null primary key,
+    city_id int not null,
+    street char(100) not null,
+    fullAddress varchar(200),
+    num char(5),
+    other char(100),
+    quarter char(50),
+    zip char(10),
+    FOREIGN KEY (city_id) REFERENCES icaks_sapp_econt_cities(id)
+) engine = MyISAM
+
+desc icaks_sapp_econt_countries;
+
+alter table icaks_sapp_econt_countries
+add column name char(50) not null;
+
+create table icaks_sapp_econt_orders (
+    id int not null,
+    order_id int not null,
+    client_id int not null,
+    address_id int not null,
+    shipment_number char(100),
+    foreign key (order_id) references icaks_sapp_orders(id),
+    foreign key (client_id) references  icaks_sapp_econt_clients(id),
+    foreign key (address_id) references  icaks_sapp_econt_addresses(id)
+) ENGINE = MyISAM

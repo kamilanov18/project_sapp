@@ -2,6 +2,7 @@
 {
     public class CityDTO
     {
+        public int Id { get; set; }
         public CountryDTO? Country { get; set; }
         public string? Name { get; set; }
         public string? PostCode { get; set; }

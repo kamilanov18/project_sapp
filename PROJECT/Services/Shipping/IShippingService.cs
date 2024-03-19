@@ -12,7 +12,8 @@ namespace Services.Shipping
         public Task<List<CityDTO>> GetCities(string countryCode);
         public Task<List<StreetDTO>> GetStreets(string cityId);
         public Task<List<QuarterDTO>> GetQuarters(int cityId);
-        //public List<OrderTrackingDTO> GetTrackingDetails(int orderId);
 
+        public ClientDTO GetSenderClient();
+        public AddressDTO GetSenderAddress();
     }
 }
