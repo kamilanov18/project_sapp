@@ -6,6 +6,13 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center'
+    },
+    primaryText: {
+        color:'black',
+
+    },
+    primary: {
+        backgroundColor:'blue'
     }
 });
 

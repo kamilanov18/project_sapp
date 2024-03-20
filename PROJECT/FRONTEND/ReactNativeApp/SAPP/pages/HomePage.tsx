@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import OrdersPage from './OrdersPage';
 import React, { useContext } from 'react';
 import ServiceContext from '../components/ServiceContext';
 import ProductsPage from './ProductsPage';
@@ -7,6 +6,7 @@ import ProfilePage from './ProfilePage';
 import ActionsPage from './ActionsPage';
 import { Assets, Icon } from 'react-native-ui-lib';
 import MainUsersPage from './Users/MainUsersPage';
+import MainOrdersPage from './Orders/MainOrdersPage';
 const Tab = createBottomTabNavigator();
 
 type iconFactoryType = ((props: {
@@ -26,8 +26,8 @@ export default function HomePage() {
         <Tab.Navigator>
             {ctx.Auth.allowRoles(["admin","operator","packager"]) && 
                 <Tab.Screen 
-                    name='Orders' 
-                    component={OrdersPage} 
+                    name='MainOrdersPage' 
+                    component={MainOrdersPage} 
                     options={{ title: ctx.Translate.get('orders-page.title'), tabBarIcon: iconFactory(Assets.icons.search,"red",12) }}
                 />
             }

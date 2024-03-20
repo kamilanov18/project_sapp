@@ -6,6 +6,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ServiceContext from './components/ServiceContext';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import HomePage from './pages/HomePage';
+import OrdersPage from './pages/Orders/OrdersPage';
+import MainOrdersPage from './pages/Orders/MainOrdersPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +19,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
-          component={LoginPage}
+          component={MainOrdersPage}
           options={{ title: ctx.Translate.get('login-page.title'), headerShown: false}}
         />
         <Stack.Screen

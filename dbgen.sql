@@ -291,4 +291,6 @@ create table icaks_sapp_econt_orders (
     foreign key (order_id) references icaks_sapp_orders(id),
     foreign key (client_id) references  icaks_sapp_econt_clients(id),
     foreign key (address_id) references  icaks_sapp_econt_addresses(id)
-) ENGINE = MyISAM
+) ENGINE = MyISAM;
+
+select * from icaks_wc_order_addresses;

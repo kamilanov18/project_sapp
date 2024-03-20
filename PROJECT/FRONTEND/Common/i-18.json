@@ -45,7 +45,8 @@
         },
         "orders-page": {
             "title": "Поръчки",
-            "single": "Поръчка"
+            "single": "Поръчка",
+            "open-details":"Детайли"
         },
         "home-page": {
             "title": "Начало"
