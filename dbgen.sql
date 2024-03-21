@@ -294,3 +294,5 @@ create table icaks_sapp_econt_orders (
 ) ENGINE = MyISAM;
 
 select * from icaks_wc_order_addresses;
+
+select * from icaks_sapp_statuses
