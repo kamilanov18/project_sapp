@@ -32,12 +32,12 @@ namespace WEBAPI.Controllers
                 shipment.Label.Weight = dto.Products.Sum(x => x.Count);
                 shipment.Label.SenderAddress = _econtService.GetSenderAddress();
                 shipment.Label.SenderClient = _econtService.GetSenderClient();
-
+                
                 var res = await _econtService.SendShipmentAsync(shipment);
                 res.Content.ReadAsStream().CopyTo(Console.OpenStandardOutput());
                 _logger.LogInformation($"User with id: {User.GetId()} sent econt shipment to: {shipment.Label.ReceiverClient.Name}");
                 return Ok();
-            } 
+            }
             catch (Exception ex)
             {
                 _logger.LogInformation($"User with id: {User.GetId()} tried sending econt shipment to: {shipment.Label.ReceiverClient.Name}, but failed");

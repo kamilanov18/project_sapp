@@ -13,6 +13,27 @@ const styles = StyleSheet.create({
     },
     primary: {
         backgroundColor:'blue'
+    },
+    iconBox:{
+        flex:0.5,
+        marginRight:5,
+        padding:5
+    },
+    drawerItem: {
+        height: 80,
+        flexDirection:"row",
+        justifyContent:"center",
+        borderBottomWidth:1,
+        borderBottomColor:'#7a7a7a',
+    },
+    duplicateDrawerItem: {
+        height: 80,
+        flexDirection:"row",
+        justifyContent:"center",
+        backgroundColor: '#ffd36b',
+        borderStyle: 'dashed',
+        borderWidth:3,
+        borderColor: '#a87702'
     }
 });
 
