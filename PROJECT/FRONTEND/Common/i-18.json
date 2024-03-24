@@ -9,7 +9,8 @@
             "yes": "Да",
             "no": "Не",
             "search": "Търси",
-            "confirm-delete": "Сигурни ли сте, че искате да изтриете"
+            "confirm-delete": "Сигурни ли сте, че искате да изтриете",
+            "loading": "Зареждане..."
         },
         "errors": {
             "email-must-be-unique": "Вече има потребител с такъв имейл",
@@ -47,6 +48,15 @@
             "title": "Поръчки",
             "single": "Поръчка",
             "open-details":"Детайли"
+        },
+        "order-details-page": {
+            "title": "Детайли на поръчка",
+            "product": "Продукт",
+            "quantity": "Количество",
+            "price": "Цена",
+            "total": "Общо",
+            "back": "Назад",
+            "previous-orders": "Предишни поръчки"
         },
         "home-page": {
             "title": "Начало"

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Incubator, Picker, TextField } from "react-native-ui-lib";
 import ServiceContext from "../../components/ServiceContext";
-import { EditUserDTO } from "common\\DTOs\\EditUserDTO";
-import { NomenclatureDTO } from "common\\DTOs\\NomenclatureDTO";
 import StyleContext from "../../components/StyleContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { EditUserDTO } from "../../../../Common/DTOs/EditUserDTO";
+import { NomenclatureDTO } from "../../../../Common/DTOs/NomenclatureDTO";
 
 const {Toast} = Incubator;
 
@@ -23,25 +23,21 @@ export default function RegisterUserPage({navigation}) {
     const toggleToastVisibility = () => setIsToastVisible(!isToastVisible);
 
     useEffect(() => {
-        const fetchData = async () => {
-          return await ctx.Roles.getAll();
-        }
-
-        fetchData().then(res => {
-            setRoles(res.data); 
-        });
+        (async ()=>{
+            setRoles((await ctx.Roles.getAll()).data as NomenclatureDTO<number>[]);
+        })()
       }, []);
     
     const registerUser = async () => {
         
-        const newUser = new EditUserDTO({id:0, email: email, firstName: firstName, lastName: lastName, roleIds: roleIds, wage: wage, phone: phone});
+        const newUser = new EditUserDTO({id:0, email: email, firstName: firstName, lastName: lastName, roleIds: roleIds, wage: +wage, phone: phone});
         const res = await ctx.Users.register(newUser);
         console.log(res);
         if(res.code==200) {
             console.log("vlizam")
             navigation.navigate("UsersPage");
         } else if (res.code==400) {
-            setToastMessage(ctx.Translate.get(res.error));
+            setToastMessage(ctx.Translate.get(res.error as string));
             setIsToastVisible(true);
         }
     }

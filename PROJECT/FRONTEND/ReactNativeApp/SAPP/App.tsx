@@ -19,7 +19,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
-          component={MainOrdersPage}
+          component={LoginPage}
           options={{ title: ctx.Translate.get('login-page.title'), headerShown: false}}
         />
         <Stack.Screen

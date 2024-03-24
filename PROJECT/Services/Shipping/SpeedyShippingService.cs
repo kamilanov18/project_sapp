@@ -49,5 +49,15 @@ namespace Services.Shipping
         {
             throw new NotImplementedException();
         }
+
+        public ClientDTO GetSenderClient()
+        {
+            throw new NotImplementedException();
+        }
+
+        public AddressDTO GetSenderAddress()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

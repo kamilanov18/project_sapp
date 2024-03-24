@@ -9,21 +9,33 @@ class StatusIconProps {
     tintColor?:string
 }
 
-Assets.loadAssetsGroup('icons', {
-    icon1: require('../assets/icons/plus-large.png'),
-    // icon2: require('icon2.png'),
-    // icon3: require('icon3.png'),
-  });
-
 export default function StatusIcon(props:StatusIconProps) {
 
     const styles=useContext(StyleContext)
+    
+    Assets.loadAssetsGroup('icons', {
+        1: require('../assets/icons/plus-large.png'),
+        2: require('../assets/icons/waybill.png'),
+        3: require('../assets/icons/shipping.png'),
+        4: require('../assets/icons/check.png'),
+        5: require('../assets/icons/x.png'),
+        6: require('../assets/icons/!.png')
+      });
+    
+    const iconColorMap = {
+        1: styles.primary.backgroundColor,
+        2: 'green',
+        3: 'yellow',
+        4: 'green',
+        5: 'red',
+        6: 'orange'
+    }
 
     return (
         <Icon 
-            source={Assets.icons.icon1}
+            source={Assets.icons[props.id]}
             size={props.size} 
-            tintColor={props.tintColor ?? styles.primary.backgroundColor}
+            tintColor={props.tintColor ?? iconColorMap[props.id]}
         />
     );
 }

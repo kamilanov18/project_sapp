@@ -7,7 +7,7 @@ export class BaseService {
         this.getAuthToken = getAuthToken;
     }
     
-    protected static readonly _baseUrl: string = 'https://51f1-78-83-182-147.ngrok-free.app/api/';
+    protected static readonly _baseUrl: string = 'https://6ff9-78-83-182-147.ngrok-free.app/api/';
     protected setAuthToken: (token:string)=>void;
     protected getAuthToken: ()=>string;
 
@@ -31,6 +31,8 @@ export class BaseService {
                 'Authorization': this.getAuthToken()
             }
         });
+        console.log(url+`?id=${id}`);
+        console.log(response);
         return this.processResponse<TRes>(response);
     }
 
@@ -50,7 +52,7 @@ export class BaseService {
         res.code  = response.status;
         res.data  = response.status == 200 ? (await response.json() as TRes) : undefined;
         res.error = response.status == 200 ? undefined : await response.text();
-        console.log(res);
+        //console.log(res);
         return res;
     }
 }

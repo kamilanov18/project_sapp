@@ -1,11 +1,12 @@
 import { Assets, Button, Icon, Incubator, TextField } from "react-native-ui-lib";
 import ServiceContext from "../components/ServiceContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
-import { LoginResponseStatusEnum } from 'common\\DTOs\\LoginResponseStatusEnum';
+
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StyleSheet } from 'react-native';
+import { LoginResponseStatusEnum } from "../../../Common/DTOs/LoginResponseStatusEnum";
 
 interface Props {
     navigation: NativeStackNavigationProp<any,any>
@@ -44,6 +45,17 @@ export default function LoginPage({navigation}:Props) {
             }
         }
     }
+
+    useEffect(() => {
+        (async ()=>{
+            const res = await ctx.Roles.getAll();
+            if(res.code==200) {
+                navigation.navigate('Home');
+            } else {
+                ctx.Auth.logout();
+            }
+        })()
+    }, []);
 
     return (
         <>

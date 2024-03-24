@@ -11,4 +11,7 @@ export class OrderDetailsDTO {
     public clientLastName: string;
     public providedAddress: string;
     public address: IAddressDTO;
+    public products: ProductItemDTO[];
+    public previousOrders: OrderDTO[];
+    public isPossibleDuplicate: boolean;
 }

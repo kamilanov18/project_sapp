@@ -11,5 +11,7 @@ namespace Models.DTOs.Internal.Orders
         public string ProvidedAddress { get; set; }
         public IAddressDTO Address { get; set; }
         public List<ProductItemDTO> Products { get; set; }
+        public List<OrderDTO> PreviousOrders { get; set; }
+        public bool IsPossibleDuplicate { get; set; }
     }
 }

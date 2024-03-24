@@ -8,7 +8,8 @@ export class OrderDTO {
     
     public id: number;
     public statusId: number;
-    public clientNames: string;
+    public clientFirstName: string;
+    public clientLastName: string;
     public isPossibleDuplicate: boolean;
     public clientAddress: string;
     public products: ProductItemDTO[];

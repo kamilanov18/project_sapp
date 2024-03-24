@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 export default function MainOrdersPage() {
     const ctx = useContext(ServiceContext);
     return (
-        <Stack.Navigator initialRouteName="UsersPage" >
+        <Stack.Navigator>
             <Stack.Screen
               name="OrdersPage"
               component={OrdersPage}

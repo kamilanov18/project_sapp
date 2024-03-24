@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
     },
     primary: {
-        backgroundColor:'blue'
+        backgroundColor:'#0362fc'
     },
     iconBox:{
         flex:0.5,
@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
         padding:5
     },
     drawerItem: {
-        height: 80,
+        height: 100,
         flexDirection:"row",
         justifyContent:"center",
         borderBottomWidth:1,
         borderBottomColor:'#7a7a7a',
     },
     duplicateDrawerItem: {
-        height: 80,
+        height: 100,
         flexDirection:"row",
         justifyContent:"center",
         backgroundColor: '#ffd36b',

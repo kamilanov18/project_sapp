@@ -35,7 +35,7 @@ namespace WEBAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Get(int id)
+        public IActionResult Get([FromQuery]int id)
         {
             try
             {

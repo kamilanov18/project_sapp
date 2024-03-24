@@ -38,7 +38,8 @@ namespace Services.Internal
                         IsPossibleDuplicate = o.IsPossibleDuplicate,
                         StatusId = o.StatusId,
                         ClientAddress = $"{wca.Country} {wca.City} {wca.State} {wca.Postcode} {wca.Address1} {wca.Address2}",
-                        ClientNames = $"{wca.FirstName} {wca.LastName}",
+                        ClientFirstName = wca.FirstName,
+                        ClientLastName = wca.LastName,
                         Products = (from wcp in _ctx.IcaksWcOrderProductLookups
                                     join lp in _ctx.IcaksWcProductMetaLookups on wcp.ProductId equals (ulong)lp.ProductId
                                     where wcp.OrderId == o.ForeignOrderId
@@ -48,12 +49,37 @@ namespace Services.Internal
                                         Name = lp.Sku,
                                         Id = (int)wcp.OrderItemId
                                     }).AsNoTracking().ToList()
-                    }).AsNoTracking();
+                    }).AsNoTracking().Take(30);
         }
 
         public OrderDetailsDTO GetById(int id)
         {
-            throw new NotImplementedException();
+            var order = (from o in _ctx.IcaksSappOrders
+                    join wco in _ctx.IcaksWcOrders on o.ForeignOrderId equals wco.Id
+                    join wca in _ctx.IcaksWcOrderAddresses on wco.Id equals wca.OrderId
+                    where wca.AddressType == "shipping" && o.Id == id
+                    select new OrderDetailsDTO
+                    {
+                        Id= o.Id,
+                        IsPossibleDuplicate= o.IsPossibleDuplicate,
+                        ClientFirstName=wca.FirstName,
+                        ClientLastName=wca.LastName,
+                        ProvidedAddress = $"{wca.Country} {wca.City} {wca.State} {wca.Postcode} {wca.Address1} {wca.Address2}",
+                        Products = (from wcp in _ctx.IcaksWcOrderProductLookups
+                                   join lp in _ctx.IcaksWcProductMetaLookups on wcp.ProductId equals (ulong)lp.ProductId
+                                   where wcp.OrderId == o.ForeignOrderId
+                                   select new ProductItemDTO
+                                   {
+                                       Count = wcp.ProductQty,
+                                       Name = lp.Sku,
+                                       Id = (int)wcp.OrderItemId
+                                   }).AsNoTracking().ToList()
+                    }
+                ).First();
+            order.PreviousOrders = (from o in GetAll()
+                                    where o.ClientFirstName == order.ClientFirstName && o.ClientLastName == order.ClientLastName
+                                    select o).AsNoTracking().ToList();
+            return order;
         }
     }
 }
