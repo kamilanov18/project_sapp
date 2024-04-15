@@ -36,6 +36,18 @@ export class BaseService {
         return this.processResponse<TRes>(response);
     }
 
+    protected async generateRequestByQuery<TRes>(url: string, method: HttpMethod, query:string): Promise<ResponseDTO<TRes>>  {
+        let response = await fetch(url+`?${query}`, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': this.getAuthToken()
+            }
+        });
+        //console.log(response);
+        return this.processResponse<TRes>(response);
+    }
+
     protected async generateRequestNoParams<TRes>(url: string, method: HttpMethod): Promise<ResponseDTO<TRes>>  {
         let response = await fetch(url, {
             method: method,
